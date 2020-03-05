@@ -8,18 +8,6 @@
 <body>
         <h1>New Survey</h1>
         <button onclick="addQuestion()">Add Question</button>
-        <script>function addQuestion() {
-                var node = document.createElement('div')
-                var label = document.createElement('label')
-                var select = document.createElement('select')
-                label.innerHTML = 'Question'
-                node.appendChild(label)
-
-                select.innerHTML='<option value="range">Range</option><option value="option">Option</option><option value="text">Text</option>'
-                node.appendChild(select)
-
-                document.getElementById('newSurveyForm').appendChild(node)
-        }</script>
         <form action="/new" method="post" id="newSurveyForm">
                 <label>ID</label>
                 <input type="number" name="id"/>
@@ -30,3 +18,5 @@
                 <input type="submit" name="submit" value="submit"/>
         </form>
 </body>
+
+<script src="public.js"></script>
