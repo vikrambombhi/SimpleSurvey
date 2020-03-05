@@ -18,7 +18,7 @@ public class TextQuestion {
     @Test
     public void toString() {
         String answer = "pepperoni";
-        question.setAnswer("Pepperoni");
+        question.setAnswer(answer);
 
         assertEquals(q + ": " + answer, question.toString());
     }
