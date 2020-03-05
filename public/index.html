@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en-US" xmlns:th="https://www.thymeleaf.org">
+        <head>
+                <link rel="icon" type="image/png" href="favicon.ico">
+                <title>SimpleSurvey</title>
+        </head>
+</html>
+<body>
+        <h1>New Survey</h1>
+        <button onclick="addQuestion()">Add Question</button>
+        <form action="/new" method="post" id="newSurveyForm">
+                <label>ID</label>
+                <input type="number" name="id"/>
+                <label>Title</label>
+                <input type="text" name="title"/>
+
+
+                <input type="submit" name="submit" value="submit"/>
+        </form>
+</body>
+
+<script src="public.js"></script>
