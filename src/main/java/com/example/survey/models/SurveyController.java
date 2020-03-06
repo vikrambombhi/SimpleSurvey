@@ -17,4 +17,12 @@ public class SurveyController {
         model.addAttribute("survey", surveyRepo);
         return "survey";
     }
+
+    @PostMapping("/new")
+    @ResponseBody
+    public Survey newSurvey(@RequestParam("title") String title) {
+        Survey s = new Survey(title);
+        this.surveyRepo.save(s);
+        return s;
+    }
 }
