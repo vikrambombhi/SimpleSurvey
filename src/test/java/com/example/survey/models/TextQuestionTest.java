@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class TextQuestion {
+public class TextQuestionTest {
     public TextQuestion question;
     public String q;
 
@@ -16,7 +16,7 @@ public class TextQuestion {
     }
 
     @Test
-    public void toString() {
+    public void setAnswer() {
         String answer = "pepperoni";
         question.setAnswer(answer);
 
