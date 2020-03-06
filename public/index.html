@@ -1,22 +1,108 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+
 <html lang="en-US" xmlns:th="https://www.thymeleaf.org">
-        <head>
-                <link rel="icon" type="image/png" href="favicon.ico">
-                <title>SimpleSurvey</title>
-        </head>
-</html>
+  <head>
+    <link rel="icon" type="image/png" href="favicon.ico" />
+    <link rel="stylesheet" href="https://unpkg.com/@shopify/polaris@4.14.0/styles.min.css"/>
+    <title>SimpleSurvey</title>
+  </head>
+
 <body>
-        <h1>New Survey</h1>
-        <button onclick="addQuestion()">Add Question</button>
-        <form action="/new" method="post" id="newSurveyForm">
-                <label>ID</label>
-                <input type="number" name="id"/>
-                <label>Title</label>
-                <input type="text" name="title"/>
+  <div>
+    <div class="Polaris-Page">
+      <div class="Polaris-Page-Header Polaris-Page-Header--separator">
+        <div class="Polaris-Page-Header__MainContent">
+          <div class="Polaris-Page-Header__TitleActionMenuWrapper">
+            <div>
+              <div class="Polaris-Header-Title__TitleAndSubtitleWrapper">
+                <div class="Polaris-Header-Title">
+                  <h1 class="Polaris-DisplayText Polaris-DisplayText--sizeLarge">Simple Survey</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="Polaris-Page__Content">
+        <div class="Polaris-Layout">
+          <div class="Polaris-Layout__AnnotatedSection">
+              <div class="Polaris-TextContainer">
+                <div style="display:flex;justify-content: space-between;">
+                  <div>
+                    <h2 class="Polaris-Heading">New Survey</h2>
+                  </div>
+                  <div>
+                    <button type="button" class="Polaris-Button Polaris-Button Polaris-Button--sizeSlim" onclick="addQuestion()">
+                      <span class="Polaris-Button__Content"><span class="Polaris-Button__Text">Add Question</span></span>
+                    </button>
+                  </div>
+                </div>
 
+                <div>
+                  <form action="/new" method="post" id="newSurveyForm">
+                    <div>
+                      <div class="Polaris-FormLayout">
+                        <div class="Polaris-FormLayout__Item">
+                          <div class="">
+                            <div class="Polaris-Labelled__LabelWrapper">
+                              <div class="Polaris-Label"><label id="PolarisTextField19Label" for="PolarisTextField19" class="Polaris-Label__Text">ID</label></div>
+                            </div>
+                            <div class="Polaris-Connected">
+                              <div class="Polaris-Connected__Item Polaris-Connected__Item--primary">
+                                <div class="Polaris-TextField"><input id="PolarisTextField19" class="Polaris-TextField__Input" type="number" name="id">
+                                  <div class="Polaris-TextField__Backdrop"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="Polaris-FormLayout__Item">
+                          <div class="">
+                            <div class="Polaris-Labelled__LabelWrapper">
+                              <div class="Polaris-Label"><label id="PolarisTextField20Label" for="PolarisTextField20" class="Polaris-Label__Text">Title</label></div>
+                            </div>
+                            <div class="Polaris-Connected">
+                              <div class="Polaris-Connected__Item Polaris-Connected__Item--primary">
+                                <div class="Polaris-TextField"><input id="PolarisTextField20" class="Polaris-TextField__Input" type="text" name="title">
+                                  <div class="Polaris-TextField__Backdrop"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="Polaris-FormLayout__Item">
+                          <div>
+                              <input type="submit" name="submit" value="Submit" class="Polaris-Button Polaris-Button--primary Polaris-Button"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
 
-                <input type="submit" name="submit" value="submit"/>
-        </form>
+                </div>
+              </div>
+          </div>
+
+          <div class="Polaris-Layout__AnnotatedSection">
+            <div class="Polaris-TextContainer">
+              <div style="display:flex;justify-content: space-between;">
+                <div>
+                  <h2 class="Polaris-Heading">Surveys</h2>
+                </div>
+              </div>
+
+              <div>
+                <ul class="Polaris-List" id="survey-list"></ul>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 <script src="public.js"></script>
+
+</html>
