@@ -1,7 +1,5 @@
 package com.example.survey.models;
 
-import jdk.internal.joptsimple.internal.Strings;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
