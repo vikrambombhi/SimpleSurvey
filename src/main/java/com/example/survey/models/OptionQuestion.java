@@ -1,5 +1,7 @@
 package com.example.survey.models;
 
+import jdk.internal.joptsimple.internal.Strings;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +39,7 @@ public class OptionQuestion {
         return options;
     }
 
-    public void setOptions(HashSet<String> options) {
+    public void setOptions(Set<String> options) {
         this.options = options;
     }
 
@@ -56,9 +58,7 @@ public class OptionQuestion {
     @Override
     public String toString() {
         String options = " options (";
-        for(String option : this.options) {
-            options += option + ", ";
-        }
+        options += String.join(", ", this.options);
         return question + options +  "): " + answer;
     }
 
