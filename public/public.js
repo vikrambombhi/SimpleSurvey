@@ -13,7 +13,7 @@ function addQuestion() {
 
 async function loadSurveyList() {
     const surveyListDom = document.getElementById('survey-list');
-    const response = await fetch("http://localhost:8080/surveys");
+    const response = await fetch(`${window.location.origin}/surveys`);
     const json = await response.json();
 
     json['_embedded'].survey.forEach((survey) => {
