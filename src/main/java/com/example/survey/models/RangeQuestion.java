@@ -34,6 +34,6 @@ public class RangeQuestion {
 
     @Override
     public String toString() {
-        return question + " min " + min + "max " + max +": " + answer;
+        return question + " min " + min + " max " + max +": " + answer;
     }
 }
