@@ -18,15 +18,6 @@ public class RangeQuestion extends Question {
         this.min = min;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    @Override
-    public void setQuestion(String q) {
-        question = q;
-    }
-
     public void setAnswer(int answer) {
         this.answer = answer;
     }

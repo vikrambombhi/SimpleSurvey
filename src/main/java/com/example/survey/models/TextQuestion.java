@@ -13,15 +13,6 @@ public class TextQuestion extends Question {
         this.question = question;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    @Override
-    public void setQuestion(String q) {
-        question = q;
-    }
-
     @Override
     public String getAnswer() {
         return answer;

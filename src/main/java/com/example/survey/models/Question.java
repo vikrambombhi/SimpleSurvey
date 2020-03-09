@@ -10,11 +10,15 @@ public abstract class Question {
     protected long id;
     protected String question;
 
-    public abstract String getQuestion();
-
-    public abstract void setQuestion(String q);
-
     public abstract String getAnswer(); // setter handled by subclass
+
+    public void setQuestion(String q) {
+        question = q;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
 
     public void setId(long id) {
         this.id = id;

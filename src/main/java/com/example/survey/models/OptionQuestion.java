@@ -26,15 +26,6 @@ public class OptionQuestion extends Question {
         this.options = options;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    @Override
-    public void setQuestion(String q) {
-        question = q;
-    }
-
     public Set<String> getOptions() {
         return options;
     }
