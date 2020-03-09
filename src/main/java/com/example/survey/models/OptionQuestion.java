@@ -5,23 +5,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class OptionQuestion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    private String question;
+public class OptionQuestion extends Question {
     private String answer;
     @ElementCollection(
             fetch = FetchType.EAGER
     )
     private Set<String> options;
 
-    public OptionQuestion() {}
+    public OptionQuestion() {
+        options = new HashSet<String>();
+    }
 
     public OptionQuestion(String question) {
         this.question = question;
-        this.options = new HashSet<String>();
+        options = new HashSet<String>();
     }
 
     public OptionQuestion(String question, Set<String> options) {
@@ -31,6 +28,11 @@ public class OptionQuestion {
 
     public String getQuestion() {
         return question;
+    }
+
+    @Override
+    public void setQuestion(String q) {
+        question = q;
     }
 
     public Set<String> getOptions() {
@@ -57,7 +59,7 @@ public class OptionQuestion {
     public String toString() {
         String options = " options (";
         options += String.join(", ", this.options);
-        return question + options +  "): " + answer;
+        return question + options + "): " + answer;
     }
 
 }

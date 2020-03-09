@@ -6,19 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class RangeQuestion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class RangeQuestion extends Question {
+    private int min, max, answer;
 
-    private String question;
-    private Integer min;
-    private Integer max;
-    private Integer answer;
+    public RangeQuestion() {
+    }
 
-    public RangeQuestion() {}
-
-    public RangeQuestion(String question, Integer min, Integer max) {
+    public RangeQuestion(String question, int min, int max) {
         this.question = question;
         this.max = max;
         this.min = min;
@@ -28,12 +22,22 @@ public class RangeQuestion {
         return question;
     }
 
-    public void setAnswer(Integer answer) {
+    @Override
+    public void setQuestion(String q) {
+        question = q;
+    }
+
+    public void setAnswer(int answer) {
         this.answer = answer;
     }
 
     @Override
     public String toString() {
-        return question + " min " + min + " max " + max +": " + answer;
+        return question + " min " + min + " max " + max + ": " + answer;
+    }
+
+    @Override
+    public String getAnswer() {
+        return "" + answer;
     }
 }

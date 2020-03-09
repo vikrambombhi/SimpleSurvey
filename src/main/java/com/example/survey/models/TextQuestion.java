@@ -3,15 +3,12 @@ package com.example.survey.models;
 import javax.persistence.*;
 
 @Entity
-public class TextQuestion {
-    private String question;
+public class TextQuestion extends Question {
     private String answer;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    public TextQuestion() {
+    }
 
-    public TextQuestion() {}
     public TextQuestion(String question) {
         this.question = question;
     }
@@ -20,6 +17,12 @@ public class TextQuestion {
         return question;
     }
 
+    @Override
+    public void setQuestion(String q) {
+        question = q;
+    }
+
+    @Override
     public String getAnswer() {
         return answer;
     }
