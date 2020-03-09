@@ -14,41 +14,38 @@ public class SurveyTest {
     @BeforeEach
     public void BeforeEachTest() {
         survey = new Survey("Food");
-        survey.setOptionQuestions(new HashSet<OptionQuestion>());
-        survey.setRangeQuestions(new HashSet<RangeQuestion>());
-        survey.setTextQuestions(new HashSet<TextQuestion>());
     }
 
     @Test
     public void addOptionQuestion() {
-        assertEquals(0, survey.getOptionQuestions().size());
+        assertEquals(0, survey.getQuestions().size());
 
         OptionQuestion question = new OptionQuestion("What is your favourite type of pizza?");
-        survey.addOptionQuestion(question);
+        survey.addQuestion(question);
 
-        assertEquals(1, survey.getOptionQuestions().size());
-        assertTrue(survey.getOptionQuestions().contains(question));
+        assertEquals(1, survey.getQuestions().size());
+        assertTrue(survey.getQuestions().contains(question));
     }
 
     @Test
     public void addRangeQuestion() {
-        assertEquals(0, survey.getRangeQuestions().size());
+        assertEquals(0, survey.getQuestions().size());
 
         RangeQuestion question = new RangeQuestion("On a scale of 1 to 10, how much do you like hawaiian pizza?", 1, 10);
-        survey.addRangeQuestion(question);
+        survey.addQuestion(question);
 
-        assertEquals(1, survey.getRangeQuestions().size());
-        assertTrue(survey.getRangeQuestions().contains(question));
+        assertEquals(1, survey.getQuestions().size());
+        assertTrue(survey.getQuestions().contains(question));
     }
 
     @Test
     public void addTextQuestion() {
-        assertEquals(0, survey.getTextQuestions().size());
+        assertEquals(0, survey.getQuestions().size());
 
         TextQuestion question = new TextQuestion("What is your favourite type of pizza?");
-        survey.addTextQuestion(question);
+        survey.addQuestion(question);
 
-        assertEquals(1, survey.getTextQuestions().size());
-        assertTrue(survey.getTextQuestions().contains(question));
+        assertEquals(1, survey.getQuestions().size());
+        assertTrue(survey.getQuestions().contains(question));
     }
 }

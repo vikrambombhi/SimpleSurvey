@@ -1,7 +1,7 @@
 package com.example.survey.models;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -10,76 +10,52 @@ public class Survey {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    public String name;
-    public boolean closed;
+    private String name;
+    private boolean closed;
 
     @OneToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    public Set<TextQuestion> textQuestions;
-    @OneToMany(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    public Set<OptionQuestion> optionQuestions;
-    @OneToMany(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    public Set<RangeQuestion> rangeQuestions;
+    public Set<Question> questions;
 
-    public Survey() {}
+    public Survey() {
+        questions = new HashSet<>();
+    }
 
     public Survey(String name) {
         this.name = name;
         this.closed = false;
+        questions = new HashSet<>();
     }
 
     public void setClosed(boolean closed) {
         this.closed = closed;
     }
 
+    public boolean isClosed() {
+        return closed;
+    }
+
     public String getName() {
         return name;
     }
 
-    public Set<TextQuestion> getTextQuestions() {
-        return textQuestions;
+    public void setName(String n) {
+        name = n;
     }
 
-    public void setTextQuestions(Set<TextQuestion> textQuestions) {
-        this.textQuestions = textQuestions;
+    public Set<Question> getQuestions() {
+        return questions;
     }
 
-    public void addTextQuestion(TextQuestion question) {
-        this.textQuestions.add(question);
+    public void setQuestions(Set<Question> qs) {
+        questions = qs;
     }
 
-    public Set<OptionQuestion> getOptionQuestions() {
-        return optionQuestions;
+    public void addQuestion(Question q) {
+        questions.add(q);
     }
 
-    public void setOptionQuestions(Set<OptionQuestion> optionQuestions) {
-        this.optionQuestions = optionQuestions;
-    }
-
-    public void addOptionQuestion(OptionQuestion question) {
-        this.optionQuestions.add(question);
-    }
-
-    public Set<RangeQuestion> getRangeQuestions() {
-        return rangeQuestions;
-    }
-
-    public void setRangeQuestions(Set<RangeQuestion> rangeQuestions) {
-        this.rangeQuestions = rangeQuestions;
-    }
-
-    public void addRangeQuestion(RangeQuestion question) {
-        this.rangeQuestions.add(question);
-    }
 }
