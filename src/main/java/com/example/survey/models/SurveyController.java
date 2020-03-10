@@ -13,6 +13,7 @@ public class SurveyController {
         this.surveyRepo = surveyRepo;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/survey")
     public String survey(@RequestParam("id") long id, Model model) {
         Optional<Survey> surveyRepo = this.surveyRepo.findById(id);
