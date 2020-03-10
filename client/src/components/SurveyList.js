@@ -7,7 +7,7 @@ export function SurveyList() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`http://localhost:8080/surveys`);
+      const res = await fetch(`/surveys`);
       res
         .json()
         .then(res => setSurveys(res["_embedded"].survey || []))
@@ -16,13 +16,12 @@ export function SurveyList() {
 
     fetchData();
   }, []);
-  console.log("surveys: ", surveys);
 
   const surveysMarkup =
     surveys && surveys.length > 0 ? (
       <List type="bullet">
         {surveys.map((survey, index) => (
-          <List.Item>{survey.name}</List.Item>
+          <List.Item key={index}>{survey.name}</List.Item>
         ))}
       </List>
     ) : null;
