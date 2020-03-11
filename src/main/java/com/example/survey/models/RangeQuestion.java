@@ -1,10 +1,13 @@
 package com.example.survey.models;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.Collections;
 
 @Entity
+@JsonTypeName("range")
 public class RangeQuestion extends Question {
     private int min, max;
 
