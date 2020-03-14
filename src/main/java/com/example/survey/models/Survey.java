@@ -58,4 +58,7 @@ public class Survey {
         questions.add(q);
     }
 
+    public long getId() {
+        return id;
+    }
 }
