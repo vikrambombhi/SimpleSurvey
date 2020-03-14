@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity
 public class TextQuestion extends Question {
     @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
-    private Set<String> answers;
+    private Set<Answer> answers;
 
     public TextQuestion() {
         answers = new HashSet();
@@ -18,17 +18,18 @@ public class TextQuestion extends Question {
         answers = new HashSet();
     }
 
-    public void addAnswer(String answer) {
-        answers.add(answer);
-    }
-
     @Override
     public String toString() {
         return question + ": " + answers.toString();
     }
 
     @Override
-    public Set<String> getAnswers() {
+    public Set<Answer> getAnswers() {
         return answers;
+    }
+
+    @Override
+    public void addAnswer(Answer ans) {
+        answers.add(ans);
     }
 }

@@ -16,7 +16,7 @@ class RangeQuestionTest {
     @Test
     void testToString() {
         RangeQuestion rq = new RangeQuestion("how much does kirin bench (in lbs)?", 45, 205);
-        rq.addAnswer(45);
+        rq.addAnswer(new Answer(45));
         String expected = "how much does kirin bench (in lbs)? min 45 max 205: [45]";
         assertEquals(expected, rq.toString());
     }

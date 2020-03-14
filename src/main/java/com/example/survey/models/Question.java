@@ -11,9 +11,9 @@ public abstract class Question {
     protected long id;
     protected String question;
 
-    public abstract Set<String> getAnswers();
+    public abstract Set<Answer> getAnswers();
 
-    public abstract void addAnswer(String ans);
+    public abstract void addAnswer(Answer ans);
 
     public void setQuestion(String q) {
         question = q;

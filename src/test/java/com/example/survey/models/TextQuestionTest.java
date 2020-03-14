@@ -17,7 +17,7 @@ public class TextQuestionTest {
 
     @Test
     public void addAnswer() {
-        String answer = "pepperoni";
+        Answer answer = new Answer("pepperoni");
         String expected = q + ": " + "[" + answer + "]";
         question.addAnswer(answer);
 

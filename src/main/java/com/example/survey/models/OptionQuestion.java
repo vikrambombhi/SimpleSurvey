@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity
 public class OptionQuestion extends Question {
     @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
-    private Set<String> answers;
+    private Set<Answer> answers;
     @ElementCollection(
             fetch = FetchType.EAGER
     )
@@ -42,7 +42,7 @@ public class OptionQuestion extends Question {
     }
 
 
-    public void addAnswer(String answer) {
+    public void addAnswer(Answer answer) {
         answers.add(answer);
     }
 
@@ -54,7 +54,7 @@ public class OptionQuestion extends Question {
     }
 
     @Override
-    public Set<String> getAnswers() {
+    public Set<Answer> getAnswers() {
         return answers;
     }
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 public class RangeQuestion extends Question {
     private int min, max;
     @ElementCollection(targetClass=Integer.class, fetch = FetchType.EAGER)
-    private Set<Integer> answers;
+    private Set<Answer> answers;
 
     public RangeQuestion() {
         answers = new HashSet();
@@ -23,33 +23,18 @@ public class RangeQuestion extends Question {
         answers = new HashSet();
     }
 
-    public void addAnswer(int answer) {
-        answers.add(answer);
-    }
-
     @Override
     public String toString() {
         return question + " min " + min + " max " + max + ": " + answers.toString();
     }
 
     @Override
-    public Set<String> getAnswers() {
-        HashSet<String> toret = new HashSet();
-        for (int ans : answers) {
-            toret.add("" + ans);
-        }
-        return toret;
+    public Set<Answer> getAnswers() {
+        return answers;
     }
 
     @Override
-    public void addAnswer(String ans) {
-        int response;
-        try {
-            response = Integer.parseInt(ans);
-        } catch (NumberFormatException e) {
-            response = 0;
-        }
-        addAnswer(response);
+    public void addAnswer(Answer ans) {
+        answers.add(ans);
     }
-
 }
