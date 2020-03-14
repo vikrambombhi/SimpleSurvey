@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Answer {
+public class Answer implements Comparable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -47,5 +47,14 @@ public class Answer {
             return "" + val;
         }
         return response;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Answer) {
+            Answer a = (Answer) o;
+            return val - a.getVal();
+        }
+        return 0;
     }
 }

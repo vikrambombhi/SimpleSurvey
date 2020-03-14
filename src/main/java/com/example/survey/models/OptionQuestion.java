@@ -22,7 +22,7 @@ public class OptionQuestion extends Question {
     }
 
     public OptionQuestion(String question, Set<String> options) {
-        this.question = question;
+        super(question);
         this.options = options;
     }
 
