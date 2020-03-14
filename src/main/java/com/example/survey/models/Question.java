@@ -1,6 +1,7 @@
 package com.example.survey.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -10,7 +11,9 @@ public abstract class Question {
     protected long id;
     protected String question;
 
-    public abstract String getAnswer(); // setter handled by subclass
+    public abstract Set<String> getAnswers();
+
+    public abstract void addAnswer(String ans);
 
     public void setQuestion(String q) {
         question = q;

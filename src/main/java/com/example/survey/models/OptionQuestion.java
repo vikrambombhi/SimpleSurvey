@@ -6,19 +6,21 @@ import java.util.Set;
 
 @Entity
 public class OptionQuestion extends Question {
-    private String answer;
+    private Set<String> answers;
     @ElementCollection(
             fetch = FetchType.EAGER
     )
     private Set<String> options;
 
     public OptionQuestion() {
-        options = new HashSet<String>();
+        options = new HashSet();
+        answers = new HashSet();
     }
 
     public OptionQuestion(String question) {
         this.question = question;
-        options = new HashSet<String>();
+        options = new HashSet();
+        answers = new HashSet();
     }
 
     public OptionQuestion(String question, Set<String> options) {
@@ -38,19 +40,20 @@ public class OptionQuestion extends Question {
         this.options.add(option);
     }
 
-    public String getAnswer() {
-        return answer;
-    }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void addAnswer(String answer) {
+        answers.add(answer);
     }
 
     @Override
     public String toString() {
         String options = " options (";
         options += String.join(", ", this.options);
-        return question + options + "): " + answer;
+        return question + options + "): " + answers;
     }
 
+    @Override
+    public Set<String> getAnswers() {
+        return answers;
+    }
 }

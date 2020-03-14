@@ -1,29 +1,33 @@
 package com.example.survey.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class TextQuestion extends Question {
-    private String answer;
+    private Set<String> answers;
 
     public TextQuestion() {
+        answers = new HashSet();
     }
 
     public TextQuestion(String question) {
         this.question = question;
+        answers = new HashSet();
     }
 
-    @Override
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void addAnswer(String answer) {
+        answers.add(answer);
     }
 
     @Override
     public String toString() {
-        return question + ": " + answer;
+        return question + ": " + answers;
+    }
+
+    @Override
+    public Set<String> getAnswers() {
+        return answers;
     }
 }
