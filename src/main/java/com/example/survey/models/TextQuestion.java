@@ -6,6 +6,7 @@ import java.util.Set;
 
 @Entity
 public class TextQuestion extends Question {
+    @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
     private Set<String> answers;
 
     public TextQuestion() {
@@ -23,7 +24,7 @@ public class TextQuestion extends Question {
 
     @Override
     public String toString() {
-        return question + ": " + answers;
+        return question + ": " + answers.toString();
     }
 
     @Override

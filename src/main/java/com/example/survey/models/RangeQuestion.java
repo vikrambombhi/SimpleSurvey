@@ -1,15 +1,15 @@
 package com.example.survey.models;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class RangeQuestion extends Question {
     private int min, max;
+    @ElementCollection(targetClass=Integer.class, fetch = FetchType.EAGER)
     private Set<Integer> answers;
 
     public RangeQuestion() {
@@ -29,7 +29,7 @@ public class RangeQuestion extends Question {
 
     @Override
     public String toString() {
-        return question + " min " + min + " max " + max + ": " + answers;
+        return question + " min " + min + " max " + max + ": " + answers.toString();
     }
 
     @Override
@@ -51,4 +51,5 @@ public class RangeQuestion extends Question {
         }
         addAnswer(response);
     }
+
 }
