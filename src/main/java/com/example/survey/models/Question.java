@@ -1,6 +1,7 @@
 package com.example.survey.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -10,10 +11,25 @@ public abstract class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected long id;
     protected String question;
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    protected Set<Answer> answers;
 
-    public abstract Set<Answer> getAnswers();
+    public Question() {
+        answers = new HashSet();
+    }
 
-    public abstract void addAnswer(Answer ans);
+    public Question(String ques) {
+        question = ques;
+        answers = new HashSet();
+    }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void addAnswer(Answer ans) {
+        answers.add(ans);
+    }
 
     public void setQuestion(String q) {
         question = q;
