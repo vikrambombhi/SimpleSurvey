@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AnswerTest {
 
     private Answer valAnswer, strAnswer;
+
     @BeforeEach
     public void setupTests() {
         valAnswer = new Answer(1);
@@ -32,6 +33,13 @@ class AnswerTest {
     public void testToString() {
         assertEquals("1", valAnswer.toString());
         assertEquals("UwU", strAnswer.toString());
+    }
+
+    @Test
+    public void compareTo() {
+        valAnswer.setVal(1);
+        Answer valAnswer2 = new Answer(2);
+        assertEquals(-1, valAnswer.compareTo(valAnswer2));
     }
 
 }
