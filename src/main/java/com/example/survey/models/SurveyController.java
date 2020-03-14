@@ -25,4 +25,13 @@ public class SurveyController {
         this.surveyRepo.save(s);
         return s;
     }
+
+    @PostMapping("/close")
+    @ResponseBody
+    public Survey closeSurvey(@RequestParam("id") Integer id) {
+        Survey s = this.surveyRepo.findById(id);
+        s.setClosed(true);
+        this.surveyRepo.save(s);
+        return s;
+    }
 }
