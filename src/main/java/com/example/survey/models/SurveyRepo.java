@@ -7,5 +7,4 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "survey", path = "surveys")
 public interface SurveyRepo extends CrudRepository<Survey, Long> {
-    Survey findById(@Param("id") Integer id);
 }
