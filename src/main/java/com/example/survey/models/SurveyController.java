@@ -32,7 +32,6 @@ public class SurveyController {
     public Survey newSurvey(@RequestParam("name") String name) {
         Survey s = new Survey(name);
         this.surveyRepo.save(s);
-        System.out.println("id" + s.getId());
         return s;
     }
 
