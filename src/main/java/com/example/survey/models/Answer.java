@@ -1,11 +1,9 @@
 package com.example.survey.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Answer implements Comparable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

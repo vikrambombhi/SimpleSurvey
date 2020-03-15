@@ -1,7 +1,5 @@
 package com.example.survey.models;
 
-import com.sun.tools.javac.util.List;
-
 import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.Collections;
