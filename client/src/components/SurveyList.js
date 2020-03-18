@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { Card, List } from "@shopify/polaris";
+import { Card } from "@shopify/polaris";
 
-export function SurveyList() {
+export function SurveyList({ admin = false }) {
   const [surveys, setSurveys] = useState([]);
 
   useEffect(() => {
@@ -18,17 +18,22 @@ export function SurveyList() {
   }, []);
 
   const surveysMarkup =
-    surveys && surveys.length > 0 ? (
-      <List type="bullet">
-        {surveys.map((survey, index) => (
-          <List.Item key={index}>{survey.name}</List.Item>
-        ))}
-      </List>
-    ) : null;
+    surveys && surveys.length > 0
+      ? surveys.map((survey, index) => (
+          <Card
+            key={index}
+            sectioned
+            title={survey.name}
+            actions={
+              admin
+                ? [{ content: "Edit Survey", url: "./todo" }]
+                : [{ content: "Complete Survey", url: "./todo" }]
+            }
+          >
+            <p>TODO: list questions from this survey here</p>
+          </Card>
+        ))
+      : null;
 
-  return (
-    <Card title="Open surveys" sectioned>
-      {surveysMarkup}
-    </Card>
-  );
+  return surveysMarkup;
 }
