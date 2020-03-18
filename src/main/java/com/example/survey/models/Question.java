@@ -11,7 +11,12 @@ public abstract class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected long id;
     protected String question;
-    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     protected Set<Answer> answers;
 
     public Question() {
