@@ -4,26 +4,17 @@ import javax.persistence.*;
 
 @Entity
 public class TextQuestion extends Question {
-    private String answer;
 
     public TextQuestion() {
+       super();
     }
 
     public TextQuestion(String question) {
-        this.question = question;
-    }
-
-    @Override
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
+        super(question);
     }
 
     @Override
     public String toString() {
-        return question + ": " + answer;
+        return question + ": " + answers.toString();
     }
 }

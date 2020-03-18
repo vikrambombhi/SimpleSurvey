@@ -50,9 +50,9 @@ class OptionQuestionTest {
         oq.addOption("biden");
         oq.addOption("mama");
 
-        oq.setAnswer("mama");
+        oq.addAnswer(new Answer("mama"));
 
-        String expected = "who's joe? options (biden, mama): mama";
-        assertTrue(expected.equals(oq.toString()));
+        String expected = "who's joe? options (biden, mama): [mama]";
+        assertEquals(expected, oq.toString());
     }
 }

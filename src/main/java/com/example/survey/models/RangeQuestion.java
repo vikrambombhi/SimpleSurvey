@@ -1,34 +1,42 @@
 package com.example.survey.models;
 
+import com.sun.tools.javac.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Collections;
 
 @Entity
 public class RangeQuestion extends Question {
-    private int min, max, answer;
+    private int min, max;
 
     public RangeQuestion() {
+        super();
     }
 
     public RangeQuestion(String question, int min, int max) {
-        this.question = question;
+        super(question);
         this.max = max;
         this.min = min;
     }
 
-    public void setAnswer(int answer) {
-        this.answer = answer;
+    public int getMin() { return min; }
+    public int getMax() { return max; }
+    public void setMin(int m) { min = m; }
+    public void setMax(int m) { max = m; }
+
+    @Override
+    public void addAnswer(Answer ans) {
+        if (ans.getVal() <= max && ans.getVal() >= min) {
+            super.addAnswer(ans);
+            return;
+        }
     }
 
     @Override
     public String toString() {
-        return question + " min " + min + " max " + max + ": " + answer;
-    }
-
-    @Override
-    public String getAnswer() {
-        return "" + answer;
+        ArrayList<Answer> sorted = new ArrayList<Answer>(answers);
+        Collections.sort(sorted);
+        return question + " min " + min + " max " + max + ": " + sorted.toString();
     }
 }

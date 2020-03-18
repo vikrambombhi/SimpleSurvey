@@ -16,10 +16,11 @@ public class TextQuestionTest {
     }
 
     @Test
-    public void setAnswer() {
-        String answer = "pepperoni";
-        question.setAnswer(answer);
+    public void addAnswer() {
+        Answer answer = new Answer("pepperoni");
+        String expected = q + ": " + "[" + answer + "]";
+        question.addAnswer(answer);
 
-        assertEquals(q + ": " + answer, question.toString());
+        assertEquals(expected, question.toString());
     }
 }
