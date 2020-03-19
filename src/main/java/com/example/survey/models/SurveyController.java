@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/api")
 public class SurveyController {
     private SurveyRepo surveyRepo;
 

@@ -17,7 +17,7 @@ export function CreateSurveys() {
         content: "Create Survey",
         onAction: toggleModalHandler
       }}
-      breadcrumbs={[{ content: "Home", url: "/" }]}
+      breadcrumbs={[{ content: "Home", url: "/app" }]}
     >
       <NewSurveyModal open={openModal} openHandler={toggleModalHandler} />
       <SurveyList admin />

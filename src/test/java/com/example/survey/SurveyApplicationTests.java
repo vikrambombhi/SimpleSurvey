@@ -35,14 +35,14 @@ class SurveyApplicationTests {
 	@Test
 	public void newSurvey() throws Exception {
 
-		MvcResult r = this.mockMvc.perform(post("/new")
+		MvcResult r = this.mockMvc.perform(post("/api/new")
 				.param("name", "joe"))
 				.andExpect(status().isOk())
 				.andReturn();
 
 		Survey s = this.objectMapper.readValue(r.getResponse().getContentAsString(), Survey.class);
 
-		this.mockMvc.perform(post("/survey")
+		this.mockMvc.perform(post("/api/survey")
 				.param("id", String.valueOf(s.getId())))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.name", is("joe")))
@@ -52,14 +52,14 @@ class SurveyApplicationTests {
 
 	@Test
 	void closeSurvey() throws Exception {
-		MvcResult r = this.mockMvc.perform(post("/new")
+		MvcResult r = this.mockMvc.perform(post("/api/new")
 				.param("name", "joe"))
 				.andExpect(status().isOk())
 				.andReturn();
 
 		Survey s = this.objectMapper.readValue(r.getResponse().getContentAsString(), Survey.class);
 
-		this.mockMvc.perform(post("/close")
+		this.mockMvc.perform(post("/api/close")
 				.param("id", String.valueOf(s.getId())))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.closed", is(true)));
@@ -81,7 +81,7 @@ class SurveyApplicationTests {
 
 		this.surveyRepo.save(survey);
 
-		this.mockMvc.perform(post("/close")
+		this.mockMvc.perform(post("/api/close")
 				.param("id", String.valueOf(survey.getId())))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.closed", is(true)))

@@ -14,7 +14,7 @@ export function NewSurveyModal({ open, openHandler }) {
     }
 
     async function submit() {
-      const res = await fetch(`/new?name=${name}`, {
+      const res = await fetch(`/api/new?name=${name}`, {
         method: "POST"
       });
       res

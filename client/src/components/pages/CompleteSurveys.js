@@ -5,7 +5,10 @@ import { SurveyList } from "../SurveyList";
 
 export function CompleteSurveys() {
   return (
-    <Page title="Simple Survey" breadcrumbs={[{ content: "Home", url: "/" }]}>
+    <Page
+      title="Simple Survey"
+      breadcrumbs={[{ content: "Home", url: "/app" }]}
+    >
       <SurveyList />
     </Page>
   );
