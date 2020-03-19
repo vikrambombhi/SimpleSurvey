@@ -9,11 +9,14 @@ export function App() {
     <AppProvider i18n={enTranslations}>
       <Router>
         <Switch>
-          <Route path="/admin">
+          <Route path="/app/admin">
             <CreateSurveys admin={true} />
           </Route>
-          <Route path="/surveys">
+          <Route path="/app/surveys">
             <CompleteSurveys />
+          </Route>
+          <Route path="/app">
+            <Home />
           </Route>
           <Route path="/">
             <Home />

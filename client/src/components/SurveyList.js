@@ -7,7 +7,7 @@ export function SurveyList({ admin = false }) {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`/surveys`);
+      const res = await fetch(`/api/surveys`);
       res
         .json()
         .then(res => setSurveys(res["_embedded"].survey || []))
