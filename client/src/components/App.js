@@ -1,30 +1,25 @@
-import React, { useState, useCallback } from "react";
-
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import enTranslations from "@shopify/polaris/locales/en.json";
-import { AppProvider, Page } from "@shopify/polaris";
-import { NewPageForm } from "./NewSurveyForm";
-import { NewSurveyModal } from "./NewSurveyModal";
-import { SurveyList } from "./SurveyList";
+import { AppProvider } from "@shopify/polaris";
+import { CreateSurveys, Home, CompleteSurveys } from "./pages";
 
 export function App() {
-  const [openModal, setOpenModal] = useState(false);
-  const toggleModalHandler = useCallback(() => {
-    setOpenModal(!openModal);
-  }, [openModal]);
-
   return (
     <AppProvider i18n={enTranslations}>
-      <Page
-        title="Simple Survey"
-        primaryAction={{
-          content: "Create Survey",
-          onAction: toggleModalHandler
-        }}
-      >
-        <NewPageForm />
-        <NewSurveyModal open={openModal} openHandler={toggleModalHandler} />
-        <SurveyList />
-      </Page>
+      <Router>
+        <Switch>
+          <Route path="/admin">
+            <CreateSurveys admin={true} />
+          </Route>
+          <Route path="/surveys">
+            <CompleteSurveys />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
     </AppProvider>
   );
 }
