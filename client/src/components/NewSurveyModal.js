@@ -7,7 +7,7 @@ export function NewSurveyModal({ open, openHandler }) {
 
   const handleTitleChange = useCallback(value => setName(value), []);
 
-  const handleModalAction = () => {
+  const handleModalAction = async () => {
     if (name === "") {
       openHandler();
       return;
@@ -17,13 +17,13 @@ export function NewSurveyModal({ open, openHandler }) {
       const res = await fetch(`/api/new?name=${name}`, {
         method: "POST"
       });
-      res
+      await res
         .json()
         .then(res => console.log("Done!"))
         .catch(err => console.log("FAILED"));
     }
 
-    submit();
+    await submit();
     openHandler();
     window.location.reload();
   };
