@@ -10,8 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -88,5 +88,14 @@ class SurveyApplicationTests {
 				.andExpect(jsonPath("$.questions[*].question", containsInAnyOrder("Text Question", "Range Question")))
 				.andExpect(jsonPath("$.questions[*].answers[*].response", containsInAnyOrder("foo", "bar", null, null)))
 				.andExpect(jsonPath("$.questions[*].answers[*].val", containsInAnyOrder(5, 69, 0, 0)));
+	}
+
+	@Test
+	void surveysHasID() throws Exception {
+		this.mockMvc.perform(get("/api/surveys"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("_embedded.survey[*].id",  notNullValue()))
+				.andExpect(jsonPath("_embedded.survey[*].questions[*].id",  notNullValue()));
+		;
 	}
 }
