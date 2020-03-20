@@ -29,9 +29,7 @@ export function Survey({ survey = {} }) {
           "Accept": "application/json",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          answers: body
-        })
+        body: body
       });
 
       await res

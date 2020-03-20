@@ -18,7 +18,7 @@ public class QuestionController {
         this.questionRepo = questionRepo;
     }
 
-    @PostMapping(value = "/answers", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/answers", produces = "application/json; charset=utf-8", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Answer> answerQuestions(@RequestBody List<Answer> answers) {
         for (Answer a: answers) {
