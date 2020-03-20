@@ -13,8 +13,15 @@ export function SurveyForm({ questions }) {
     }
 
     async function submit() {
-      const res = await fetch(`/api/new?name=${name}`, {
-        method: "POST"
+      const res = await fetch(`/api/new`, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: `${name}`
+        })
       });
       await res
         .json()
