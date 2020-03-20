@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Card } from "@shopify/polaris";
+import { Card, List } from "@shopify/polaris";
 
 export function SurveyList({ admin = false }) {
   const [surveys, setSurveys] = useState([]);
@@ -18,9 +18,12 @@ export function SurveyList({ admin = false }) {
   }, []);
 
     const questionsListMarkup = (questions) => {
-        return questions.map(question => {
-            return <p key={question.question}>{question.question}</p>
-        })
+        return (
+            <List type="bullet">
+                { questions.map(question => {
+                return <List.Item>{question.question}</List.Item>
+            }) }
+            </List>)
     }
 
 
@@ -41,7 +44,7 @@ export function SurveyList({ admin = false }) {
       ? surveys.map((survey, index) => {
           let actions = admin
                 ? [{ content: "Edit Survey", url: "/app/admin/surveys/edit" }]
-                : [{ content: "Complete Survey", url: "./todo" }]
+                : [{ content: "Complete Survey", url: "./survey/"+survey.id }]
 
           if (admin && !survey.closed) {
             actions.push({ content: "Close Survey", onAction: closeSurvey(survey.id) })
