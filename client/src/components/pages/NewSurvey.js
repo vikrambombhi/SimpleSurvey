@@ -12,7 +12,7 @@ export function NewSurvey() {
   };
   const getQuestions = () => {
     return [...questions];
-  }
+  };
   return (
     <Page
       title="Create a new survey"

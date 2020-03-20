@@ -45,7 +45,10 @@ export function SurveyForm({ setQuestions, getQuestions }) {
             type="text"
           />
 
-          <QuestionList setQuestions={setQuestions} getQuestions={getQuestions} />
+          <QuestionList
+            setQuestions={setQuestions}
+            getQuestions={getQuestions}
+          />
 
           <Button submit>Submit</Button>
         </FormLayout>
