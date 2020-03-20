@@ -10,7 +10,9 @@ export function FillSurvey() {
 
     useEffect(() => {
         async function fetchData() {
-            const res = await fetch(`/api/surveys/` + id);
+            const res = await fetch(`/api/survey?id=${id}`, {
+              method: "POST",
+            });
             res
                 .json()
                 .then(res => setSurvey(res || {}))
