@@ -7,10 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication
 public class SurveyApplication {
@@ -27,8 +24,8 @@ public class SurveyApplication {
       survey.addQuestion(new TextQuestion("Text Question 2"));
       survey.addQuestion(new RangeQuestion("Range Question 1", 1, 100));
       survey.addQuestion(new RangeQuestion("Range Question 2", 2, 200));
-      survey.addQuestion(new OptionQuestion("Option Question 1"));
-      survey.addQuestion(new OptionQuestion("Option Question 2"));
+      survey.addQuestion(new OptionQuestion("Option Question 1", new HashSet<>(Arrays.asList("a", "b"))));
+      survey.addQuestion(new OptionQuestion("Option Question 2", new HashSet<>(Arrays.asList("c", "d"))));
 
       repository.save(survey);
 
