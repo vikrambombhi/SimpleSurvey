@@ -21,17 +21,17 @@ export function NewSurvey() {
           {
             content: 'Range Question',
             accessibilityLabel: 'Add a range question',
-            onAction: () => {addQuestion('range')},
+            onAction: () => {addQuestion('Range')},
           },
           {
             content: 'Option Question',
             accessibilityLabel: 'Add an option question',
-            onAction: () => {addQuestion('option')},
+            onAction: () => {addQuestion('Option')},
           },
           {
             content: 'Text Question',
             accessibilityLabel: 'Add a text question',
-            onAction: () => {addQuestion('text')},
+            onAction: () => {addQuestion('Text')},
           }
         ],
       }]}
