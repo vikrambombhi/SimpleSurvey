@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider } from "@shopify/polaris";
-import { CreateSurveys, Home, CompleteSurveys } from "./pages";
+import { CreateSurveys, Home, CompleteSurveys, FillSurvey } from "./pages";
 
 export function App() {
   return (
@@ -14,6 +14,9 @@ export function App() {
           </Route>
           <Route path="/app/surveys">
             <CompleteSurveys />
+          </Route>
+          <Route path="/app/survey/:id">
+            <FillSurvey />
           </Route>
           <Route path="/app">
             <Home />
