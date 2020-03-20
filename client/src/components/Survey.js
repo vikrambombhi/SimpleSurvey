@@ -9,11 +9,28 @@ export function Survey({ survey = {} }) {
             survey.questions.forEach((question) => {
                 answers[question.question] = null
                 setAnswers(answers)
-                console.log('useeffect')
             })
         }
         // eslint-disable-next-line
     }, [survey])
+
+    async function submitAnswers() {
+      const res = await fetch(`/api/answers`, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          answers: `${answers}`
+        })
+      });
+
+      await res
+        .json()
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    }
 
     const questionMarkup = (question) => {
         if(question.min){
@@ -72,7 +89,7 @@ export function Survey({ survey = {} }) {
                 <Form>
                     <FormLayout>
                         { questions }
-                        <Button submit>Submit</Button>
+                        <Button onClick={submitAnswers}>Submit</Button>
                     </FormLayout>
                 </Form>
             )

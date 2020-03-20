@@ -3,6 +3,7 @@ package com.example.survey.controllers;
 import com.example.survey.models.Answer;
 import com.example.survey.models.Question;
 import com.example.survey.models.QuestionRepo;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class QuestionController {
         this.questionRepo = questionRepo;
     }
 
-    @PostMapping("/answers")
+    @PostMapping(value = "/answers", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Answer> answerQuestions(@RequestBody List<Answer> answers) {
         for (Answer a: answers) {
