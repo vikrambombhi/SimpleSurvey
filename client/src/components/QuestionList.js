@@ -7,11 +7,11 @@ export function QuestionList({ questions, isAdmin }) {
   const [rangeMin, setRangeMin] = useState("");
   const [rangeMax, setRangeMax] = useState("");
   const [options, setOptions] = useState("");
-  const handleQuestionTitles = useCallback(newTitle => {
+  const addTitle = (newTitle, index) => {
     const values = [...questionTitles];
-    values.push(newTitle);
+    values[index]=newTitle;
     setQuestionTitles(values);
-  }, []);
+  }
   const handleMinChange = useCallback(newMin => setRangeMin(newMin), []);
   const handleMaxChange = useCallback(newMax => setRangeMax(newMax), []);
   const handleOptionChange = useCallback(
@@ -60,7 +60,7 @@ export function QuestionList({ questions, isAdmin }) {
               label="Question Title"
               value={questionTitles[index]}
               type="text"
-              onChange={handleQuestionTitles[index]}
+              onChange={(val) => {addTitle(val, index)}}
             />
             {rangeMarkup}
             {optionMarkup}
