@@ -123,6 +123,7 @@ class SurveyApplicationTests {
 		this.mockMvc.perform(get("/api/surveys"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("_embedded.survey[*].id",  notNullValue()))
+				.andExpect(jsonPath("_embedded.survey[*].questions",  not(empty())))
 				.andExpect(jsonPath("_embedded.survey[*].questions[*].id",  notNullValue()));
 	}
 

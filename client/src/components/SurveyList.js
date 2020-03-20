@@ -17,6 +17,13 @@ export function SurveyList({ admin = false }) {
     fetchData();
   }, []);
 
+    const questionsListMarkup = (questions) => {
+        return questions.map(question => {
+            return <p key={question.question}>{question.question}</p>
+        })
+    }
+
+
   function closeSurvey(id) {
     return async function() {
       const res = await fetch(`/api/close?id=${id}`, {
@@ -47,12 +54,12 @@ export function SurveyList({ admin = false }) {
               title={survey.name}
               actions={actions}
             >
-              <p><b>{survey.closed ? "CLOSED" : "OPEN"}</b></p>
-              <p>TODO: list questions from this survey here</p>
+                <p><b>{survey.closed ? "CLOSED" : "OPEN"}</b></p>
+                { questionsListMarkup(survey.questions) }
             </Card>
           )
       })
       : null;
 
-  return surveysMarkup;
+    return surveysMarkup
 }

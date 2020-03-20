@@ -108,6 +108,16 @@
 										<arguments>install</arguments>
 								</configuration>
 						</execution>
+												
+						<execution>
+								<id>react-tests</id>
+								<goals>
+										<goal>yarn</goal>
+								</goals>
+								<configuration>
+										<arguments>test --watchAll=false</arguments>
+								</configuration>
+						</execution>
 
 						<execution>
 								<id>build-frontend</id>

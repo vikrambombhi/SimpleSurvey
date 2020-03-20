@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from "react";
 
 import { Form, FormLayout, TextField, Button, Card } from "@shopify/polaris";
+import { QuestionList } from "./QuestionList.js";
 
-export function SurveyForm() {
+export function SurveyForm({ questions }) {
   const [name, setName] = useState("");
-
   const handleTitleChange = useCallback(value => setName(value), []);
 
   const handleSubmit = async () => {
@@ -16,11 +16,11 @@ export function SurveyForm() {
       const res = await fetch(`/api/new`, {
         method: "POST",
         headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            name: `${name}`,
+          name: `${name}`
         })
       });
       await res
@@ -44,6 +44,8 @@ export function SurveyForm() {
             label="Name"
             type="text"
           />
+
+          <QuestionList questions={questions} />
 
           <Button submit>Submit</Button>
         </FormLayout>

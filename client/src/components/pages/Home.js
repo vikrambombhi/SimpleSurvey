@@ -5,7 +5,7 @@ import { EmptyState } from "@shopify/polaris";
 export function Home() {
   return (
     <EmptyState
-      heading="Simple Surevey"
+      heading="Simple Survey"
       action={{ content: "View Surveys", url: "/app/surveys" }}
       secondaryAction={{
         content: "Admin",
