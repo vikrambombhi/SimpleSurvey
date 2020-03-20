@@ -15,6 +15,14 @@ export function Survey({ survey = {} }) {
     }, [survey])
 
     async function submitAnswers() {
+        const b = []
+        console.log(answers)
+        for (let [name, value] of Object.entries(answers)) {
+            console.log(name, value)
+            b.push(value)
+        }
+        console.log(b)
+        const body = JSON.stringify(b)
       const res = await fetch(`/api/answers`, {
         method: "POST",
         headers: {
@@ -22,7 +30,7 @@ export function Survey({ survey = {} }) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          answers: `${answers}`
+          answers: body
         })
       });
 
@@ -37,11 +45,14 @@ export function Survey({ survey = {} }) {
             // Range question
             return (
                 <RangeSlider
-                    value={answers[question.question] == null ? parseInt(question.min) : parseInt(answers[question.question])}
+                    value={answers[question.question] == null ? parseInt(question.min) : parseInt(answers[question.question].val)}
                     label={question.question}
                     onChange={(value, id) => {
                         const tmp = {}
-                        tmp[question.question] = value
+                        tmp[question.question] = {
+                            val: value,
+                            question: {id: question.id}
+                        }
                         setAnswers({...answers, ...tmp})
                     }}
                     output
@@ -51,14 +62,17 @@ export function Survey({ survey = {} }) {
             // Option question
             return (
                 <Select
-                    value={answers[question.question]}
+                    value={answers[question.question] == null ? '' : answers[question.question].response}
                     label={question.question}
                     options={question.options.map((option) => {
                         return {label: option, value: option}
                     })}
                     onChange={(value, id) => {
                         const tmp = {}
-                        tmp[question.question] = value
+                        tmp[question.question] = {
+                            response: value,
+                            question: {id: question.id},
+                        }
                         setAnswers({...answers, ...tmp})
                     }}
                 />
@@ -67,10 +81,13 @@ export function Survey({ survey = {} }) {
             // Text question
             return (
                 <TextField
-                    value={answers[question.question]}
+                    value={answers[question.question] == null ? '' : answers[question.question].response}
                     onChange={(value, id) => {
                         const tmp = {}
-                        tmp[question.question] = value
+                        tmp[question.question] = {
+                            response: value,
+                            question: {id: question.id},
+                        }
                         setAnswers({...answers, ...tmp})
                     }}
                     label={question.question}
