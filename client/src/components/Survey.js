@@ -16,12 +16,10 @@ export function Survey({ survey = {} }) {
 
     async function submitAnswers() {
         const b = []
-        console.log(answers)
         for (let [name, value] of Object.entries(answers)) {
             console.log(name, value)
             b.push(value)
         }
-        console.log(b)
         const body = JSON.stringify(b)
       const res = await fetch(`/api/answers`, {
         method: "POST",
