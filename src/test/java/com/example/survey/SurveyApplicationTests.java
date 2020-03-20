@@ -11,13 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.w3c.dom.ranges.Range;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,8 +29,6 @@ class SurveyApplicationTests {
 	private ObjectMapper objectMapper;
 	@Autowired
 	private SurveyRepo surveyRepo;
-	@Autowired
-	private QuestionRepo questionRepo;
 
 	SurveyApplicationTests() {
 	}
@@ -124,30 +119,5 @@ class SurveyApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("_embedded.survey[*].id",  notNullValue()))
 				.andExpect(jsonPath("_embedded.survey[*].questions[*].id",  notNullValue()));
-	}
-
-	@Test
-	void answerQuestion() throws Exception {
-		TextQuestion textQuestion = new TextQuestion("who's joe?");
-		this.questionRepo.save(textQuestion);
-
-		Answer a1 = new Answer("joe mama");
-		a1.setQuestion(textQuestion);
-		Answer a2 = new Answer("joe biden");
-		a2.setQuestion(textQuestion);
-
-		List<Answer> answers = new ArrayList();
-		answers.add(a1);
-		answers.add(a2);
-
-		String body = this.objectMapper.writeValueAsString(answers);
-
-		this.mockMvc.perform(post("/api/answers")
-				.contentType("application/json; charset=utf-8")
-				.content(body))
-				.andExpect(status().isOk());
-
-		Question q = this.questionRepo.findById(textQuestion.getId());
-		assertEquals(2, q.getAnswers().size());
 	}
 }
