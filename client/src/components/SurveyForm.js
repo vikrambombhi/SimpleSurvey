@@ -3,7 +3,7 @@ import React, { useState, useCallback } from "react";
 import { Form, FormLayout, TextField, Button, Card } from "@shopify/polaris";
 import { QuestionList } from "./QuestionList.js";
 
-export function SurveyForm({ questions }) {
+export function SurveyForm({ setQuestions, getQuestions }) {
   const [name, setName] = useState("");
   const handleTitleChange = useCallback(value => setName(value), []);
 
@@ -45,7 +45,7 @@ export function SurveyForm({ questions }) {
             type="text"
           />
 
-          <QuestionList questions={questions} />
+          <QuestionList setQuestions={setQuestions} getQuestions={getQuestions} />
 
           <Button submit>Submit</Button>
         </FormLayout>

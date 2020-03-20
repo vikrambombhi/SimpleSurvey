@@ -2,15 +2,14 @@ import React, { useState, useCallback } from "react";
 
 import { Card, TextField, Stack, Badge } from "@shopify/polaris";
 
-export function QuestionList({ questions, isAdmin }) {
-  const [questionTitles, setQuestionTitles] = useState([]);
+export function QuestionList({ setQuestions, getQuestions}) {
   const [rangeMin, setRangeMin] = useState("");
   const [rangeMax, setRangeMax] = useState("");
   const [options, setOptions] = useState("");
   const addTitle = (newTitle, index) => {
-    const values = [...questionTitles];
-    values[index]=newTitle;
-    setQuestionTitles(values);
+    const values = getQuestions();
+    values[index].title=newTitle;
+    setQuestions(values);
   }
   const handleMinChange = useCallback(newMin => setRangeMin(newMin), []);
   const handleMaxChange = useCallback(newMax => setRangeMax(newMax), []);
@@ -19,8 +18,8 @@ export function QuestionList({ questions, isAdmin }) {
     []
   );
 
-  return questions && questions.length > 0
-    ? questions.map((question, index) => {
+  return getQuestions() && getQuestions().length > 0
+    ? getQuestions().map((question, index) => {
         const rangeMarkup =
           question.type === "Range" ? (
             <Stack distribution="equalSpacing">
@@ -58,7 +57,7 @@ export function QuestionList({ questions, isAdmin }) {
           >
             <TextField
               label="Question Title"
-              value={questionTitles[index]}
+              value={getQuestions()[index].title}
               type="text"
               onChange={(val) => {addTitle(val, index)}}
             />
