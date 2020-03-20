@@ -3,12 +3,16 @@ import React, { useState, useCallback } from "react";
 import { Card, TextField, Stack, Badge } from "@shopify/polaris";
 
 export function QuestionList({ questions, isAdmin }) {
-  const [questionTitle, setQuestionTitle] = useState("");
+  const [questionTitles, setQuestionTitles] = useState("");
   const [rangeMin, setRangeMin] = useState("");
   const [rangeMax, setRangeMax] = useState("");
   const [textPrompt, setTextPrompt] = useState("");
   const [options, setOptions] = useState("");
-  const handleChange = useCallback(newTitle => setQuestionTitle(newTitle), []);
+  const handleQuestionTitles = useCallback(newTitle => {
+    const values = [...questionTitles];
+    values.push(newTitle)
+    setQuestionTitles(values);
+  }, []);
   const handleMinChange = useCallback(newMin => setRangeMin(newMin), []);
   const handleMaxChange = useCallback(newMax => setRangeMax(newMax), []);
   const handleTextChange = useCallback(newText => setTextPrompt(newText), []);
@@ -66,9 +70,9 @@ export function QuestionList({ questions, isAdmin }) {
           >
             <TextField
               label="Question Title"
-              value={questionTitle}
+              value={questionTitles[index]}
               type="text"
-              onChange={handleChange}
+              onChange={handleQuestionTitles[index]}
             />
             {rangeMarkup}
             {textMarkup}
