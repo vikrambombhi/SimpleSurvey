@@ -21,7 +21,13 @@ export function SurveyList({ admin = false }) {
     return (
       <List type="bullet">
         {questions.map(question => {
-          return <List.Item>{question.question}</List.Item>;
+          console.log(question);
+          return (
+            <div>
+              <List.Item> {question.question} </List.Item>
+              <p>{question.answers}</p>
+            </div>
+          );
         })}
       </List>
     );
