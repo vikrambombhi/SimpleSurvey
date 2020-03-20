@@ -112,7 +112,7 @@ class SurveyApplicationTests {
 				.andExpect(jsonPath("$.questions[*].answers[*].response", containsInAnyOrder("foo", "bar", null, null)))
 				.andExpect(jsonPath("$.questions[*].answers[*].val", containsInAnyOrder(5, 69, 0, 0)));
 	}
-	
+
 	@Test
 	void surveysHasID() throws Exception {
 		this.mockMvc.perform(get("/api/surveys"))
