@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 
 import { Form, FormLayout, TextField, Button, Card } from "@shopify/polaris";
-import { QuestionList } from './QuestionList.js';
+import { QuestionList } from "./QuestionList.js";
 
 export function SurveyForm({ questions }) {
   const [name, setName] = useState("");
@@ -13,15 +13,8 @@ export function SurveyForm({ questions }) {
     }
 
     async function submit() {
-      const res = await fetch(`/api/new`, {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            name: `${name}`,
-        })
+      const res = await fetch(`/api/new?name=${name}`, {
+        method: "POST"
       });
       await res
         .json()
