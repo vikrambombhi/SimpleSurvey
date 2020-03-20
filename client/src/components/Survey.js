@@ -49,7 +49,7 @@ export function Survey({ survey = {} }) {
                         const tmp = {}
                         tmp[question.question] = {
                             val: value,
-                            question: {id: question.id}
+                            question: {id: question.id, type: question.type},
                         }
                         setAnswers({...answers, ...tmp})
                     }}
@@ -69,7 +69,7 @@ export function Survey({ survey = {} }) {
                         const tmp = {}
                         tmp[question.question] = {
                             response: value,
-                            question: {id: question.id},
+                            question: {id: question.id, type: question.type},
                         }
                         setAnswers({...answers, ...tmp})
                     }}
@@ -84,7 +84,7 @@ export function Survey({ survey = {} }) {
                         const tmp = {}
                         tmp[question.question] = {
                             response: value,
-                            question: {id: question.id},
+                            question: {id: question.id, type: question.type},
                         }
                         setAnswers({...answers, ...tmp})
                     }}
