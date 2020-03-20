@@ -7,10 +7,15 @@ export function QuestionList({ questions, isAdmin }) {
 	const [rangeMin, setRangeMin] = useState("");
 	const [rangeMax, setRangeMax] = useState("");
 	const [textPrompt, setTextPrompt] = useState("");
+	const [options, setOptions] = useState("");
 	const handleChange = useCallback(newTitle => setQuestionTitle(newTitle), []);
 	const handleMinChange = useCallback(newMin => setRangeMin(newMin), []);
 	const handleMaxChange = useCallback(newMax => setRangeMax(newMax), []);
 	const handleTextChange = useCallback(newText => setTextPrompt(newText), []);
+	const handleOptionChange = useCallback(
+		newOptions => setOptions(newOptions),
+		[]
+	);
 
 	return questions && questions.length > 0
 		? questions.map((question, index) => {
@@ -33,12 +38,23 @@ export function QuestionList({ questions, isAdmin }) {
 					) : null;
 
 				const textMarkup =
-					question.type == "Text" ? (
+					question.type === "Text" ? (
 						<TextField
 							type="text"
 							label="Question Prompt"
 							value={textPrompt}
 							onChange={handleTextChange}
+						/>
+					) : null;
+
+				const optionMarkup =
+					question.type === "Option" ? (
+						<TextField
+							type="text"
+							label="Options"
+							value={options}
+							helpText="Comma separated value of options"
+							onChange={handleOptionChange}
 						/>
 					) : null;
 
@@ -56,6 +72,7 @@ export function QuestionList({ questions, isAdmin }) {
 						/>
 						{rangeMarkup}
 						{textMarkup}
+						{optionMarkup}
 					</Card>
 				);
 		  })
