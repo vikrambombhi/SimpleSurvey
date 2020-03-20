@@ -12,6 +12,7 @@ export function Survey({ survey = {} }) {
                 console.log('useeffect')
             })
         }
+        // eslint-disable-next-line
     }, [survey])
 
     const questionMarkup = (question) => {

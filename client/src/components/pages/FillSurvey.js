@@ -18,7 +18,7 @@ export function FillSurvey() {
         }
 
         fetchData();
-    }, []);
+    }, [id]);
 
     return (
         <Page
