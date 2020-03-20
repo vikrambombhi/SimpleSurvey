@@ -2,16 +2,21 @@ package com.example.survey;
 
 import com.example.survey.models.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.survey.models.TextQuestion;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.w3c.dom.ranges.Range;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -34,26 +39,44 @@ class SurveyApplicationTests {
 
 	@Test
 	public void newSurvey() throws Exception {
+		OptionQuestion optionQuestion = new OptionQuestion("Option Question");
+		RangeQuestion rangeQuestion = new RangeQuestion("Range Question", 0, 10);
+		TextQuestion textQuestion = new TextQuestion("Text Question");
+
+		Set<Question> questions = new HashSet<Question>();
+		questions.add(optionQuestion);
+		questions.add(rangeQuestion);
+		questions.add(textQuestion);
+
+		Survey survey = new Survey("joe");
+		survey.setQuestions(questions);
+
+		String body = this.objectMapper.writeValueAsString(survey);
 
 		MvcResult r = this.mockMvc.perform(post("/api/new")
-				.param("name", "joe"))
+				.contentType("application/json; charset=utf-8")
+				.content(body))
 				.andExpect(status().isOk())
 				.andReturn();
 
-		Survey s = this.objectMapper.readValue(r.getResponse().getContentAsString(), Survey.class);
+		Survey res = this.objectMapper.readValue(r.getResponse().getContentAsString(), Survey.class);
 
 		this.mockMvc.perform(post("/api/survey")
-				.param("id", String.valueOf(s.getId())))
+				.param("id", String.valueOf(res.getId())))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.name", is("joe")))
-				.andExpect(jsonPath("$.closed", is(false)))
-				.andExpect(jsonPath("$.questions", empty()));
+				.andExpect(jsonPath("$.questions[*].question", containsInAnyOrder("Text Question", "Range Question", "Option Question")))
+				.andExpect(jsonPath("$.closed", is(false)));
 	}
 
 	@Test
 	void closeSurvey() throws Exception {
+		Survey survey = new Survey("joe");
+		String body = this.objectMapper.writeValueAsString(survey);
+
 		MvcResult r = this.mockMvc.perform(post("/api/new")
-				.param("name", "joe"))
+				.contentType("application/json; charset=utf-8")
+				.content(body))
 				.andExpect(status().isOk())
 				.andReturn();
 
@@ -88,5 +111,13 @@ class SurveyApplicationTests {
 				.andExpect(jsonPath("$.questions[*].question", containsInAnyOrder("Text Question", "Range Question")))
 				.andExpect(jsonPath("$.questions[*].answers[*].response", containsInAnyOrder("foo", "bar", null, null)))
 				.andExpect(jsonPath("$.questions[*].answers[*].val", containsInAnyOrder(5, 69, 0, 0)));
+	}
+
+	@Test
+	void surveysHasID() throws Exception {
+		this.mockMvc.perform(get("/api/surveys"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("_embedded.survey[*].id",  notNullValue()))
+				.andExpect(jsonPath("_embedded.survey[*].questions[*].id",  notNullValue()));
 	}
 }

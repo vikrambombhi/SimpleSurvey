@@ -1,21 +1,27 @@
 import React, { useState, useCallback } from "react";
 
-import { Modal, FormLayout, TextField } from "@shopify/polaris";
+import { Form, FormLayout, TextField, Button, Card } from "@shopify/polaris";
 
-export function NewSurveyModal({ open, openHandler }) {
+export function SurveyForm() {
   const [name, setName] = useState("");
 
   const handleTitleChange = useCallback(value => setName(value), []);
 
-  const handleModalAction = async () => {
+  const handleSubmit = async () => {
     if (name === "") {
-      openHandler();
       return;
     }
 
     async function submit() {
-      const res = await fetch(`/api/new?name=${name}`, {
-        method: "POST"
+      const res = await fetch(`/api/new`, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name: `${name}`,
+        })
       });
       await res
         .json()
@@ -24,21 +30,12 @@ export function NewSurveyModal({ open, openHandler }) {
     }
 
     await submit();
-    openHandler();
-    window.location.reload();
+    window.location.href = "/app/admin/surveys";
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={openHandler}
-      title="Create a new survey"
-      primaryAction={{
-        content: "Create Survey",
-        onAction: handleModalAction
-      }}
-    >
-      <Modal.Section>
+    <Card sectioned>
+      <Form onSubmit={handleSubmit}>
         <FormLayout>
           <TextField
             data-testid="name"
@@ -47,8 +44,10 @@ export function NewSurveyModal({ open, openHandler }) {
             label="Name"
             type="text"
           />
+
+          <Button submit>Submit</Button>
         </FormLayout>
-      </Modal.Section>
-    </Modal>
+      </Form>
+    </Card>
   );
 }

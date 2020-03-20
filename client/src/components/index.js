@@ -1,2 +1,3 @@
 export { App } from "./App";
-export { NewSurveyModal } from "./NewSurveyModal";
+export { SurveyForm } from "./SurveyForm";
+export { SurveyList } from "./SurveyList";
