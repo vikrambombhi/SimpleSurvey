@@ -6,9 +6,16 @@ import { AppProvider } from "@shopify/polaris";
 import { SurveyForm } from "../components";
 
 const setup = () => {
+  const questions = [];
+  const setQuestions = qs => {
+    questions = qs;
+  };
+  const getQuestions = () => {
+    [...questions];
+  };
   const utils = render(
     <AppProvider i18n={enTranslations}>
-      <SurveyForm />
+      <SurveyForm setQuestions={setQuestions} getQuestions={getQuestions} />
     </AppProvider>
   );
   const input = utils.getByLabelText("Name");

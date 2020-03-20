@@ -24,8 +24,9 @@ export function QuestionList({ setQuestions, getQuestions }) {
     setQuestions(values);
   };
 
-  return getQuestions() && getQuestions().length > 0
-    ? getQuestions().map((question, index) => {
+  const questions = getQuestions();
+  return questions && questions.length > 0
+    ? questions.map((question, index) => {
         const rangeMarkup =
           question.type === "Range" ? (
             <Stack distribution="equalSpacing">
