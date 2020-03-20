@@ -1,11 +1,20 @@
 package com.example.survey.models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = OptionQuestion.class, name="option"),
+        @JsonSubTypes.Type(value = RangeQuestion.class, name="range"),
+        @JsonSubTypes.Type(value = TextQuestion.class, name="text")
+})
 public abstract class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
