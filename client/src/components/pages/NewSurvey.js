@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Page } from "@shopify/polaris";
 import { SurveyForm } from "..";
 
 export function NewSurvey() {
+  const [questions, setQuestions] = useState("");
+  const addQuestion = (type) => {
+    const values = [...questions];
+    values.push({ type })
+    setQuestions(values)
+  }
   return (
     <Page
       title="Create a new survey"
@@ -15,22 +21,22 @@ export function NewSurvey() {
           {
             content: 'Range Question',
             accessibilityLabel: 'Add a range question',
-            onAction: () => {},
+            onAction: () => {addQuestion('range')},
           },
           {
             content: 'Option Question',
             accessibilityLabel: 'Add an option question',
-            onAction: () => {},
+            onAction: () => {addQuestion('option')},
           },
           {
             content: 'Text Question',
             accessibilityLabel: 'Add a text question',
-            onAction: () => {},
+            onAction: () => {addQuestion('text')},
           }
         ],
       }]}
     >
-      <SurveyForm />
+      <SurveyForm questions={questions}/>
     </Page>
   );
 }
