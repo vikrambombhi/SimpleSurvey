@@ -26,7 +26,7 @@ export function SurveyList({ admin = false }) {
             title={survey.name}
             actions={
               admin
-                ? [{ content: "Edit Survey", url: "./todo" }]
+                ? [{ content: "Edit Survey", url: "/app/admin/surveys/edit" }]
                 : [{ content: "Complete Survey", url: "./todo" }]
             }
           >

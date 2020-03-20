@@ -2,15 +2,18 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider } from "@shopify/polaris";
-import { CreateSurveys, Home, CompleteSurveys } from "./pages";
+import { AdminDashboard, Home, CompleteSurveys, NewSurvey } from "./pages";
 
 export function App() {
   return (
     <AppProvider i18n={enTranslations}>
       <Router>
         <Switch>
-          <Route path="/app/admin">
-            <CreateSurveys admin={true} />
+          <Route path="/app/admin/surveys/new">
+            <NewSurvey />
+          </Route>
+          <Route path="/app/admin/surveys">
+            <AdminDashboard />
           </Route>
           <Route path="/app/surveys">
             <CompleteSurveys />
