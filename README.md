@@ -4,7 +4,13 @@ Surveyor can create a survey with a list of Questions. Questions can be open-end
 
 ## Design
 
+### UML
+
 ![uml image](docs/SimpleSurveyUML.png)
+
+### ER
+
+![er_image](docs/SimpleSurveyER.png)
 
 ## Client app (React)
 

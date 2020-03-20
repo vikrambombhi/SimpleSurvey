@@ -1,10 +1,13 @@
 package com.example.survey.models;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonTypeName("option")
 public class OptionQuestion extends Question {
     @ElementCollection(
             fetch = FetchType.EAGER

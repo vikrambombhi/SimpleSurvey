@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RepositoryRestResource(collectionResourceRel = "survey", path = "surveys")
 @RequestMapping("/api")
 public interface SurveyRepo extends CrudRepository<Survey, Long> {
+    Survey findById(long id);
 }

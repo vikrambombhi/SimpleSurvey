@@ -3,13 +3,12 @@ import { render, fireEvent } from "@testing-library/react";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider } from "@shopify/polaris";
 
-import { NewSurveyModal } from "../components";
+import { SurveyForm } from "../components";
 
-const noop = () => {};
 const setup = () => {
   const utils = render(
     <AppProvider i18n={enTranslations}>
-      <NewSurveyModal open={noop} openHandler={noop} />
+      <SurveyForm />
     </AppProvider>
   );
   const input = utils.getByLabelText("Name");
