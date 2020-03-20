@@ -4,11 +4,14 @@ import { Page } from "@shopify/polaris";
 import { SurveyForm } from "..";
 
 export function NewSurvey() {
-  const [questions, setQuestions] = useState("");
+  const [questions, setQuestions] = useState([]);
   const addQuestion = type => {
     const values = [...questions];
     values.push({ type });
     setQuestions(values);
+  };
+  const getQuestions = () => {
+    return [...questions];
   };
   return (
     <Page
@@ -44,7 +47,7 @@ export function NewSurvey() {
         }
       ]}
     >
-      <SurveyForm questions={questions} />
+      <SurveyForm setQuestions={setQuestions} getQuestions={getQuestions} />
     </Page>
   );
 }

@@ -1,22 +1,30 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 
 import { Card, TextField, Stack, Badge } from "@shopify/polaris";
 
-export function QuestionList({ questions, isAdmin }) {
-  const [questionTitle, setQuestionTitle] = useState("");
-  const [rangeMin, setRangeMin] = useState("");
-  const [rangeMax, setRangeMax] = useState("");
-  const [textPrompt, setTextPrompt] = useState("");
-  const [options, setOptions] = useState("");
-  const handleChange = useCallback(newTitle => setQuestionTitle(newTitle), []);
-  const handleMinChange = useCallback(newMin => setRangeMin(newMin), []);
-  const handleMaxChange = useCallback(newMax => setRangeMax(newMax), []);
-  const handleTextChange = useCallback(newText => setTextPrompt(newText), []);
-  const handleOptionChange = useCallback(
-    newOptions => setOptions(newOptions),
-    []
-  );
+export function QuestionList({ setQuestions, getQuestions }) {
+  const addMin = (newMin, index) => {
+    const values = getQuestions();
+    values[index].min = newMin;
+    setQuestions(values);
+  };
+  const addMax = (newMax, index) => {
+    const values = getQuestions();
+    values[index].max = newMax;
+    setQuestions(values);
+  };
+  const addOption = (newOptions, index) => {
+    const values = getQuestions();
+    values[index].options = newOptions;
+    setQuestions(values);
+  };
+  const addTitle = (newTitle, index) => {
+    const values = getQuestions();
+    values[index].title = newTitle;
+    setQuestions(values);
+  };
 
+  const questions = getQuestions();
   return questions && questions.length > 0
     ? questions.map((question, index) => {
         const rangeMarkup =
@@ -25,26 +33,20 @@ export function QuestionList({ questions, isAdmin }) {
               <Badge>Min</Badge>
               <TextField
                 type="number"
-                onChange={handleMinChange}
-                value={rangeMin}
+                onChange={val => {
+                  addMin(val, index);
+                }}
+                value={getQuestions()[index].min}
               />
               <Badge>Max</Badge>
               <TextField
                 type="number"
-                onChange={handleMaxChange}
-                value={rangeMax}
+                onChange={val => {
+                  addMax(val, index);
+                }}
+                value={getQuestions()[index].max}
               />
             </Stack>
-          ) : null;
-
-        const textMarkup =
-          question.type === "Text" ? (
-            <TextField
-              type="text"
-              label="Question Prompt"
-              value={textPrompt}
-              onChange={handleTextChange}
-            />
           ) : null;
 
         const optionMarkup =
@@ -52,9 +54,11 @@ export function QuestionList({ questions, isAdmin }) {
             <TextField
               type="text"
               label="Options"
-              value={options}
+              value={getQuestions()[index].options}
               helpText="Comma separated value of options"
-              onChange={handleOptionChange}
+              onChange={val => {
+                addOption(val, index);
+              }}
             />
           ) : null;
 
@@ -66,12 +70,13 @@ export function QuestionList({ questions, isAdmin }) {
           >
             <TextField
               label="Question Title"
-              value={questionTitle}
+              value={getQuestions()[index].title}
               type="text"
-              onChange={handleChange}
+              onChange={val => {
+                addTitle(val, index);
+              }}
             />
             {rangeMarkup}
-            {textMarkup}
             {optionMarkup}
           </Card>
         );
