@@ -26,21 +26,21 @@ export function NewSurvey() {
               content: "Range Question",
               accessibilityLabel: "Add a range question",
               onAction: () => {
-                addQuestion("Range");
+                addQuestion("range");
               }
             },
             {
               content: "Option Question",
               accessibilityLabel: "Add an option question",
               onAction: () => {
-                addQuestion("Option");
+                addQuestion("option");
               }
             },
             {
               content: "Text Question",
               accessibilityLabel: "Add a text question",
               onAction: () => {
-                addQuestion("Text");
+                addQuestion("text");
               }
             }
           ]

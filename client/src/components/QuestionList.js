@@ -24,11 +24,15 @@ export function QuestionList({ setQuestions, getQuestions }) {
     setQuestions(values);
   };
 
+  const titlize = str => {
+    return str[0].toUpperCase() + str.slice(1);
+  };
+
   const questions = getQuestions();
   return questions && questions.length > 0
     ? questions.map((question, index) => {
         const rangeMarkup =
-          question.type === "Range" ? (
+          question.type === "range" ? (
             <Stack distribution="equalSpacing">
               <Badge>Min</Badge>
               <TextField
@@ -50,7 +54,7 @@ export function QuestionList({ setQuestions, getQuestions }) {
           ) : null;
 
         const optionMarkup =
-          question.type === "Option" ? (
+          question.type === "option" ? (
             <TextField
               type="text"
               label="Options"
@@ -66,7 +70,7 @@ export function QuestionList({ setQuestions, getQuestions }) {
           <Card
             key={index}
             sectioned
-            title={"New " + question.type + " Question"}
+            title={"New " + titlize(question.type) + " Question"}
           >
             <TextField
               label="Question Title"
