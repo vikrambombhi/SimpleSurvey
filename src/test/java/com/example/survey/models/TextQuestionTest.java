@@ -3,6 +3,8 @@ package com.example.survey.models;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 
 public class TextQuestionTest {
@@ -21,6 +23,6 @@ public class TextQuestionTest {
         String expected = q + ": " + "[" + answer + "]";
         question.addAnswer(answer);
 
-        assertEquals(expected, question.toString());
+        assertThat(question.toString(), containsString(answer.toString()));
     }
 }

@@ -37,6 +37,9 @@ public class SurveyController {
     @ResponseBody
     public Survey newSurvey(@RequestBody Survey survey) {
         this.surveyRepo.save(survey);
+        for (Question q : survey.questions) {
+            System.out.println("" + q.toString());
+        }
         return survey;
     }
 

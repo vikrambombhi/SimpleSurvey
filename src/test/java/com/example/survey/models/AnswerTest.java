@@ -40,6 +40,10 @@ class AnswerTest {
         valAnswer.setVal(1);
         Answer valAnswer2 = new Answer(2);
         assertEquals(-1, valAnswer.compareTo(valAnswer2));
+
+        strAnswer.setResponse("hello");
+        Answer strAnswer2 = new Answer("hi");
+        assertEquals(-4, strAnswer.compareTo(strAnswer2));
     }
 
 }

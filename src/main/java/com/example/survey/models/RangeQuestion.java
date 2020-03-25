@@ -1,5 +1,7 @@
 package com.example.survey.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.Entity;
@@ -21,9 +23,13 @@ public class RangeQuestion extends Question {
         this.min = min;
     }
 
+    @JsonGetter("min")
     public int getMin() { return min; }
+    @JsonGetter("max")
     public int getMax() { return max; }
+    @JsonSetter("min")
     public void setMin(int m) { min = m; }
+    @JsonSetter("max)")
     public void setMax(int m) { max = m; }
 
     @Override
@@ -36,8 +42,6 @@ public class RangeQuestion extends Question {
 
     @Override
     public String toString() {
-        ArrayList<Answer> sorted = new ArrayList<Answer>(answers);
-        Collections.sort(sorted);
-        return question + " min " + min + " max " + max + ": " + sorted.toString();
+        return question + " min " + min + " max " + max + ": " + answers.toString();
     }
 }

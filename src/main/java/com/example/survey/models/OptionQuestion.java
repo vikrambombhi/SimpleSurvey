@@ -3,6 +3,8 @@ package com.example.survey.models;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,8 +45,6 @@ public class OptionQuestion extends Question {
 
     @Override
     public String toString() {
-        String options = " options (";
-        options += String.join(", ", this.options);
-        return question + options + "): " + answers.toString();
+        return question + " " + options.toString() + ": " + answers.toString();
     }
 }
