@@ -3,15 +3,13 @@ package com.example.survey.models;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
 
 @Entity
 @JsonTypeName("text")
 public class TextQuestion extends Question {
 
     public TextQuestion() {
-       super();
+        super();
     }
 
     public TextQuestion(String question) {

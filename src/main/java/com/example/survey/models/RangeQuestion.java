@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.Collections;
 
 @Entity
 @JsonTypeName("range")
@@ -24,13 +22,24 @@ public class RangeQuestion extends Question {
     }
 
     @JsonGetter("min")
-    public int getMin() { return min; }
+    public int getMin() {
+        return min;
+    }
+
     @JsonGetter("max")
-    public int getMax() { return max; }
+    public int getMax() {
+        return max;
+    }
+
     @JsonSetter("min")
-    public void setMin(int m) { min = m; }
-    @JsonSetter("max)")
-    public void setMax(int m) { max = m; }
+    public void setMin(int m) {
+        min = m;
+    }
+
+    @JsonSetter("max")
+    public void setMax(int m) {
+        max = m;
+    }
 
     @Override
     public void addAnswer(Answer ans) {

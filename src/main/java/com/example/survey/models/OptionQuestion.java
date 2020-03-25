@@ -3,8 +3,6 @@ package com.example.survey.models;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -2,8 +2,8 @@ package com.example.survey.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -19,7 +19,7 @@ class OptionQuestionTest {
 
     @Test
     void getOptions() {
-        Set<String> ops = new HashSet<>();
+        HashSet<String> ops = new HashSet();
         ops.add("bar");
 
         OptionQuestion oq = new OptionQuestion("", ops);
@@ -29,7 +29,7 @@ class OptionQuestionTest {
 
     @Test
     void setOptions() {
-        Set<String> ops = new HashSet<>();
+        HashSet<String> ops = new HashSet();
         ops.add("bar");
 
         OptionQuestion oq = new OptionQuestion();
