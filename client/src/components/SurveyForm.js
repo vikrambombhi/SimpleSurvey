@@ -22,7 +22,7 @@ export function SurveyForm({ setQuestions, getQuestions }) {
         body: JSON.stringify({
           name,
           closed: false,
-          questions: getQuestions(),
+          questions: getQuestions()
         })
       });
       await res

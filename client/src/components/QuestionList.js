@@ -18,9 +18,9 @@ export function QuestionList({ setQuestions, getQuestions }) {
     values[index].options = newOptions;
     setQuestions(values);
   };
-  const addTitle = (newTitle, index) => {
+  const addQuestionTitle = (newTitle, index) => {
     const values = getQuestions();
-    values[index].title = newTitle;
+    values[index].question = newTitle;
     setQuestions(values);
   };
 
@@ -74,10 +74,10 @@ export function QuestionList({ setQuestions, getQuestions }) {
           >
             <TextField
               label="Question Title"
-              value={getQuestions()[index].title}
+              value={getQuestions()[index].question}
               type="text"
               onChange={val => {
-                addTitle(val, index);
+                addQuestionTitle(val, index);
               }}
             />
             {rangeMarkup}
