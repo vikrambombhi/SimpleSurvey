@@ -1,7 +1,10 @@
 package com.example.survey.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Answer implements Comparable {

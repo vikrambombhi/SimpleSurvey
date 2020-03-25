@@ -109,7 +109,7 @@ class SurveyApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.closed", is(true)))
 				.andExpect(jsonPath("$.questions[*].question", containsInAnyOrder("Text Question", "Range Question")))
-				.andExpect(jsonPath("$.questions[*].answers[*].response", containsInAnyOrder("foo", "bar", null, null)))
+				.andExpect(jsonPath("$.questions[*].answers[*].response", containsInAnyOrder("foo", "bar")))
 				.andExpect(jsonPath("$.questions[*].answers[*].val", containsInAnyOrder(5, 69, 0, 0)));
 	}
 
