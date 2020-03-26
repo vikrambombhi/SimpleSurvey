@@ -6,7 +6,7 @@ import { QuestionList } from "./QuestionList.js";
 export function SurveyForm({ setQuestions, getQuestions }) {
   const [name, setName] = useState("");
   const handleTitleChange = useCallback(value => setName(value), []);
-  const strToArray = str => str.replace(/\s/g, "").split(",");
+  const strToArray = str => str?.replace(/\s/g, "").split(",");
 
   const formatQuestions = questions =>
     questions.map(q => {
