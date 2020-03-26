@@ -2,6 +2,7 @@ package com.example.survey;
 
 import com.example.survey.models.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.hystrix.exception.HystrixRuntimeException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -115,7 +117,8 @@ class SurveyApplicationTests {
     void surveysHasID() throws Exception {
         this.mockMvc.perform(get("/api/surveys"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("_embedded.survey[*].id", notNullValue()))
-                .andExpect(jsonPath("_embedded.survey[*].questions[*].id", notNullValue()));
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$[*].id", notNullValue()))
+                .andExpect(jsonPath("$[*].questions[*].id", notNullValue()));
     }
 }
