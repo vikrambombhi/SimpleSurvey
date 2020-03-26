@@ -2,10 +2,13 @@ package com.example.survey.controllers;
 
 import com.example.survey.models.Survey;
 import com.example.survey.models.SurveyRepo;
+import com.survey.commands.RepoCommand;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequestMapping("/api")
@@ -33,8 +36,15 @@ public class SurveyController {
     @PostMapping(value = "/new", produces = "application/json; charset=utf-8", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Survey newSurvey(@RequestBody Survey survey) {
-        this.surveyRepo.save(survey);
-        return survey;
+        Survey s = null;
+        try {
+            s = new RepoCommand(surveyRepo, survey).queue().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
 
     @PostMapping("/close")
