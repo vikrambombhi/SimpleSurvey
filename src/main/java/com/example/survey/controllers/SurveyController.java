@@ -1,14 +1,11 @@
 package com.example.survey.controllers;
-import com.example.survey.models.Question;
+
 import com.example.survey.models.Survey;
 import com.example.survey.models.SurveyRepo;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/api")
@@ -37,9 +34,6 @@ public class SurveyController {
     @ResponseBody
     public Survey newSurvey(@RequestBody Survey survey) {
         this.surveyRepo.save(survey);
-        for (Question q : survey.questions) {
-            System.out.println("" + q.toString());
-        }
         return survey;
     }
 
