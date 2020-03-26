@@ -4,12 +4,14 @@ import com.example.survey.models.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 import java.util.HashSet;
 
 @SpringBootApplication
+@EnableCircuitBreaker
 public class SurveyApplication {
 
     public static void main(String[] args) {
