@@ -13,9 +13,9 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = OptionQuestion.class, name="option"),
-        @JsonSubTypes.Type(value = RangeQuestion.class, name="range"),
-        @JsonSubTypes.Type(value = TextQuestion.class, name="text")
+        @JsonSubTypes.Type(value = OptionQuestion.class, name = "option"),
+        @JsonSubTypes.Type(value = RangeQuestion.class, name = "range"),
+        @JsonSubTypes.Type(value = TextQuestion.class, name = "text")
 })
 public abstract class Question {
     @Id

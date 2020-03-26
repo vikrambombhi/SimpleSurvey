@@ -2,7 +2,7 @@ package com.example.survey.models;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 @JsonTypeName("text")

@@ -2,7 +2,9 @@ package com.example.survey.models;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -2,7 +2,6 @@ package com.example.survey.models;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
