@@ -1,7 +1,10 @@
 package com.example.survey.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Answer implements Comparable {
@@ -25,7 +28,7 @@ public class Answer implements Comparable {
 
     public void setVal(int v) {
         val = v;
-        response = "";
+        response = null;
     }
 
     public int getVal() {
@@ -51,7 +54,10 @@ public class Answer implements Comparable {
     public int compareTo(Object o) {
         if (o instanceof Answer) {
             Answer a = (Answer) o;
-            return val - a.getVal();
+            if (response == null) {
+                return val - a.getVal();
+            }
+            return response.compareTo(a.getResponse());
         }
         return 0;
     }
