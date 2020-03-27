@@ -114,8 +114,10 @@ class SurveyApplicationTests {
     @Test
     void surveysHasID() throws Exception {
         this.mockMvc.perform(get("/api/surveys"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("_embedded.survey[*].id", notNullValue()))
-                .andExpect(jsonPath("_embedded.survey[*].questions[*].id", notNullValue()));
+            .andExpect(jsonPath("$[*]",  not(empty())))
+            .andExpect(jsonPath("$[*].id",  notNullValue()))
+            .andExpect(jsonPath("$[*].questions",  not(empty())))
+            .andExpect(jsonPath("$[*].questions[*].id",  notNullValue()));
+    }
     }
 }

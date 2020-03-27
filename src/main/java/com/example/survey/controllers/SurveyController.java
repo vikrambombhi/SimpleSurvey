@@ -23,6 +23,13 @@ public class SurveyController {
         return "survey";
     }
 
+    @GetMapping("/surveys")
+    @ResponseBody
+    public Iterable<Survey> getSurveys() {
+        Iterable<Survey> surveys = this.surveyRepo.findAll();
+        return surveys;
+    }
+
     @PostMapping("/survey")
     @ResponseBody
     public Survey getSurvey(@RequestParam("id") long id) {
