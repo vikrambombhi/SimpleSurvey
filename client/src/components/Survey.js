@@ -2,77 +2,84 @@ import React, {useEffect, useState} from "react";
 import {Button, Form, Select, RangeSlider, FormLayout, TextField} from '@shopify/polaris';
 
 export function Survey({ survey = {} }) {
-    const [answers, setAnswers] = useState({});
+    const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
-        if(survey.questions) {
-            survey.questions.forEach((question) => {
-                answers[question.question] = null
-                setAnswers(answers)
-                console.log('useeffect')
-            })
-        }
+        setQuestions(survey.questions || [])
         // eslint-disable-next-line
     }, [survey])
 
-    const questionMarkup = (question) => {
-        if(question.min){
-            // Range question
+    async function submitAnswers() {
+      const res = await fetch(`/api/answers`, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(questions)
+      });
+
+      await res
+        .json()
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    }
+
+    const questionMarkup = (question, index) => {
+        switch(question.type) {
+          case "range":
             return (
                 <RangeSlider
-                    value={answers[question.question] == null ? parseInt(question.min) : parseInt(answers[question.question])}
+                    value={question.answers[0]?.response || question.min}
                     label={question.question}
                     onChange={(value, id) => {
-                        const tmp = {}
-                        tmp[question.question] = value
-                        setAnswers({...answers, ...tmp})
+                      questions[index].answers = [{val: value}]
+                      setQuestions(questions)
                     }}
                     output
                 />
             )
-        } else if(question.options) {
-            // Option question
+          case "option":
             return (
                 <Select
-                    value={answers[question.question]}
+                    value={question.answers[0]?.response}
                     label={question.question}
                     options={question.options.map((option) => {
                         return {label: option, value: option}
                     })}
                     onChange={(value, id) => {
-                        const tmp = {}
-                        tmp[question.question] = value
-                        setAnswers({...answers, ...tmp})
+                      questions[index].answers = [{response: value}]
+                      setQuestions(questions)
                     }}
                 />
             )
-        } else {
-            // Text question
+          case "text":
             return (
                 <TextField
-                    value={answers[question.question]}
+                    value={question.answers[0]?.response}
                     onChange={(value, id) => {
-                        const tmp = {}
-                        tmp[question.question] = value
-                        setAnswers({...answers, ...tmp})
+                      questions[index].answers = [{response: value}]
+                      setQuestions(questions)
                     }}
                     label={question.question}
                     type="text"
                 />
             )
+          default:
+            console.log("invalid question type")
         }
     }
 
     const surveyMarkup = (survey) => {
         if(survey.questions) {
-            const questions = survey.questions.map((question) => {
-                return questionMarkup(question)
+            const questions = survey.questions.map((question, index) => {
+                return questionMarkup(question, index)
             })
             return (
                 <Form>
                     <FormLayout>
                         { questions }
-                        <Button submit>Submit</Button>
+                        <Button onClick={submitAnswers}>Submit</Button>
                     </FormLayout>
                 </Form>
             )
