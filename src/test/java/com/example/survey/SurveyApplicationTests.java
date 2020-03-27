@@ -5,7 +5,6 @@ import com.example.survey.models.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.config.ConfigurationManager;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,7 +130,9 @@ class SurveyApplicationTests {
         this.mockMvc.perform(get("/api/surveys"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$[*]", not(empty())))
                 .andExpect(jsonPath("$[*].id", notNullValue()))
+                .andExpect(jsonPath("$[*].questions", not(empty())))
                 .andExpect(jsonPath("$[*].questions[*].id", notNullValue()));
     }
 

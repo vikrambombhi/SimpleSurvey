@@ -5,7 +5,6 @@ import com.example.survey.models.SurveyRepo;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,13 +18,6 @@ public class SurveyController {
         this.surveyRepo = surveyRepo;
     }
 
-    @GetMapping("/survey")
-    public String survey(@RequestParam("id") long id, Model model) {
-        Survey survey = this.surveyRepo.findById(id);
-        model.addAttribute("survey", survey);
-        return "survey";
-    }
-
     @GetMapping("/surveys")
     @ResponseBody
     @HystrixCommand(fallbackMethod = "getSurveysFallback")
@@ -37,7 +29,7 @@ public class SurveyController {
         return new ArrayList<Survey>();
     }
 
-    @PostMapping("/survey")
+    @GetMapping("/survey")
     @ResponseBody
     public Survey getSurvey(@RequestParam("id") long id) {
         Survey survey = this.surveyRepo.findById(id);

@@ -10,7 +10,7 @@ export function SurveyList({ admin = false }) {
       const res = await fetch(`/api/surveys`);
       res
         .json()
-        .then(res => setSurveys(res))
+        .then(res => setSurveys(res || []))
         .catch(err => setSurveys([]));
     }
 
