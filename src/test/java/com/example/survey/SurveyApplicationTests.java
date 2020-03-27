@@ -113,7 +113,7 @@ class SurveyApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.closed", is(true)))
 				.andExpect(jsonPath("$.questions[*].question", containsInAnyOrder("Text Question", "Range Question")))
-				.andExpect(jsonPath("$.questions[*].answers[*].response", containsInAnyOrder("foo", "bar", null, null)))
+				.andExpect(jsonPath("$.questions[*].answers[*].response", containsInAnyOrder("foo", "bar")))
 				.andExpect(jsonPath("$.questions[*].answers[*].val", containsInAnyOrder(5, 69, 0, 0)));
 	}
 
@@ -121,33 +121,33 @@ class SurveyApplicationTests {
 	void surveysHasID() throws Exception {
 		this.mockMvc.perform(get("/api/surveys"))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("[*].id",  notNullValue()))
-				.andExpect(jsonPath("[*].questions",  not(empty())))
-				.andExpect(jsonPath("[*].questions[*].id",  notNullValue()));
+				.andExpect(jsonPath("$[*]",  not(empty())))
+				.andExpect(jsonPath("$[*].id",  notNullValue()))
+				.andExpect(jsonPath("$[*].questions",  not(empty())))
+				.andExpect(jsonPath("$[*].questions[*].id",  notNullValue()));
 	}
 
 	@Test
 	void answerQuestion() throws Exception {
 		TextQuestion textQuestion = new TextQuestion("who's joe?");
 		this.questionRepo.save(textQuestion);
+		List<Question> questions = new ArrayList();
+		questions.add(textQuestion);
 
-		Answer a1 = new Answer("joe mama");
-		a1.setQuestion(textQuestion);
-		Answer a2 = new Answer("joe biden");
-		a2.setQuestion(textQuestion);
-
+		Answer answer = new Answer("joe mama");
 		List<Answer> answers = new ArrayList();
-		answers.add(a1);
-		answers.add(a2);
+		answers.add(answer);
 
-		String body = this.objectMapper.writeValueAsString(answers);
+		String q = this.objectMapper.writeValueAsString(questions);
+		String a = this.objectMapper.writeValueAsString(answers);
+		String body = "{ \"questions\":" + q + ",\"answers\": " + a + "}";
 
 		this.mockMvc.perform(post("/api/answers")
 				.contentType("application/json; charset=utf-8")
 				.content(body))
 				.andExpect(status().isOk());
 
-		Question q = this.questionRepo.findById(textQuestion.getId());
-		assertEquals(2, q.getAnswers().size());
+		Question question = this.questionRepo.findById(textQuestion.getId());
+		assert(question.getAnswers().contains(answer));
 	}
 }

@@ -1,5 +1,6 @@
 package com.example.survey.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
@@ -13,8 +14,6 @@ public class Answer implements Comparable {
     private long id;
     int val;
     String response;
-    @ManyToOne(fetch = FetchType.EAGER)
-    Question question;
 
     public Answer() {
 
@@ -43,15 +42,6 @@ public class Answer implements Comparable {
 
     public void setResponse(String resp) {
         response = resp;
-    }
-
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
     }
 
     public String toString() {

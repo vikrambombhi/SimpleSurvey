@@ -20,12 +20,15 @@ public class QuestionController {
 
     @PostMapping(value = "/answers", produces = "application/json; charset=utf-8", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Answer> answerQuestions(@RequestBody List<Answer> answers) {
-        for (Answer a: answers) {
-            Question q = this.questionRepo.findById(a.getQuestion().getId());
-            q.addAnswer(a);
-            questionRepo.save(q);
+    public void answerQuestions(@RequestBody List<Question>questions, @RequestBody List<Answer> answers) {
+        if (answers.size() != questions.size()) {
+            return;
         }
-        return answers;
+
+        for (int i = 0; i < questions.size(); i++) {
+            Question q = this.questionRepo.findById(questions.get(i).getId());
+            q.addAnswer(answers.get(i));
+            this.questionRepo.save(q);
+        }
     }
 }
