@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -27,6 +28,8 @@ class SurveyApplicationTests {
     private ObjectMapper objectMapper;
     @Autowired
     private SurveyRepo surveyRepo;
+    @Autowired
+    private QuestionRepo questionRepo;
 
     SurveyApplicationTests() {
     }
@@ -119,5 +122,23 @@ class SurveyApplicationTests {
             .andExpect(jsonPath("$[*].questions",  not(empty())))
             .andExpect(jsonPath("$[*].questions[*].id",  notNullValue()));
     }
+
+    @Test
+    void answerQuestion() throws Exception {
+        TextQuestion textQuestion = new TextQuestion("who's joe?");
+        textQuestion.setId(this.questionRepo.save(textQuestion).getId());
+
+        Answer a1 = new Answer("joe mama");
+        textQuestion.addAnswer(a1);
+
+        String body = "[" + this.objectMapper.writeValueAsString(textQuestion) + "]";
+
+        this.mockMvc.perform(post("/api/answers")
+                .contentType("application/json; charset=utf-8")
+                .content(body))
+                .andExpect(status().isOk());
+
+        Question question = this.questionRepo.findById(textQuestion.getId());
+        assertEquals("joe mama", question.getAnswers().toArray()[0].toString());
     }
 }
