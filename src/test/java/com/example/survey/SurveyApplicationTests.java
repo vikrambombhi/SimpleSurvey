@@ -62,7 +62,7 @@ class SurveyApplicationTests {
 
         Survey res = this.objectMapper.readValue(r.getResponse().getContentAsString(), Survey.class);
 
-        this.mockMvc.perform(post("/api/survey")
+        this.mockMvc.perform(get("/api/survey")
                 .param("id", String.valueOf(res.getId())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("joe")))
@@ -117,7 +117,7 @@ class SurveyApplicationTests {
     @Test
     void surveysHasID() throws Exception {
         this.mockMvc.perform(get("/api/surveys"))
-            .andExpect(jsonPath("$[*]",  not(empty())))
+            .andExpect(jsonPath("$",  not(empty())))
             .andExpect(jsonPath("$[*].id",  notNullValue()))
             .andExpect(jsonPath("$[*].questions",  not(empty())))
             .andExpect(jsonPath("$[*].questions[*].id",  notNullValue()));

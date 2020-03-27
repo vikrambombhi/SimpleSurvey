@@ -10,13 +10,12 @@ export function FillSurvey() {
 
     useEffect(() => {
         async function fetchData() {
-            const res = await fetch(`/api/surveys/` + id);
+            const res = await fetch(`/api/survey?id=${id}`);
             res
                 .json()
                 .then(res => setSurvey(res || {}))
                 .catch(err => setSurvey({}));
         }
-
         fetchData();
     }, [id]);
 

@@ -16,13 +16,6 @@ public class SurveyController {
         this.surveyRepo = surveyRepo;
     }
 
-    @GetMapping("/survey")
-    public String survey(@RequestParam("id") long id, Model model) {
-        Survey survey = this.surveyRepo.findById(id);
-        model.addAttribute("survey", survey);
-        return "survey";
-    }
-
     @GetMapping("/surveys")
     @ResponseBody
     public Iterable<Survey> getSurveys() {
@@ -30,7 +23,7 @@ public class SurveyController {
         return surveys;
     }
 
-    @PostMapping("/survey")
+    @GetMapping("/survey")
     @ResponseBody
     public Survey getSurvey(@RequestParam("id") long id) {
         Survey survey = this.surveyRepo.findById(id);
