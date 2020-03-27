@@ -5,8 +5,11 @@ export function Survey({ survey = {} }) {
     const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
-        setQuestions(survey.questions || [])
-        // eslint-disable-next-line
+      let qs = survey.questions || []
+      setQuestions(qs.map(q => {
+        q.answers = []
+        return q
+      }))
     }, [survey])
 
     async function submitAnswers() {
@@ -21,7 +24,6 @@ export function Survey({ survey = {} }) {
 
       await res
         .json()
-        .then(res => console.log(res))
         .catch(err => console.log(err));
     }
 
@@ -30,11 +32,11 @@ export function Survey({ survey = {} }) {
           case "range":
             return (
                 <RangeSlider
-                    value={question.answers[0]?.response || question.min}
+                    value={question.answers[0]?.val || parseInt(question.min)}
                     label={question.question}
                     onChange={(value, id) => {
                       questions[index].answers = [{val: value}]
-                      setQuestions(questions)
+                      setQuestions([...questions])
                     }}
                     output
                 />
@@ -42,24 +44,24 @@ export function Survey({ survey = {} }) {
           case "option":
             return (
                 <Select
-                    value={question.answers[0]?.response}
+                    value={question.answers[0]?.response || ""}
                     label={question.question}
                     options={question.options.map((option) => {
                         return {label: option, value: option}
                     })}
                     onChange={(value, id) => {
                       questions[index].answers = [{response: value}]
-                      setQuestions(questions)
+                      setQuestions([...questions])
                     }}
                 />
             )
           case "text":
             return (
                 <TextField
-                    value={question.answers[0]?.response}
+                    value={question.answers[0]?.response || ""}
                     onChange={(value, id) => {
                       questions[index].answers = [{response: value}]
-                      setQuestions(questions)
+                      setQuestions([...questions])
                     }}
                     label={question.question}
                     type="text"
@@ -70,21 +72,18 @@ export function Survey({ survey = {} }) {
         }
     }
 
-    const surveyMarkup = (survey) => {
-        if(survey.questions) {
-            const questions = survey.questions.map((question, index) => {
-                return questionMarkup(question, index)
-            })
-            return (
-                <Form>
-                    <FormLayout>
-                        { questions }
-                        <Button onClick={submitAnswers}>Submit</Button>
-                    </FormLayout>
-                </Form>
-            )
-        } else return <p>LOADING</p>
+    const surveyMarkup = () => {
+      let qs = questions.map((question, index) => {
+          return questionMarkup(question, index)
+      })
+      return (
+          <Form>
+              <FormLayout>
+                  { qs.length ? qs : <p>LOADING</p>}
+                  <Button onClick={submitAnswers}>Submit</Button>
+              </FormLayout>
+          </Form>
+      )
     }
-
-    return surveyMarkup(survey);
+    return surveyMarkup();
 }
