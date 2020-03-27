@@ -3,8 +3,9 @@ package com.example.survey.models;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
-import java.util.Set;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OptionQuestionTest {
@@ -17,7 +18,7 @@ class OptionQuestionTest {
 
     @Test
     void getOptions() {
-        Set<String> ops = new HashSet<>();
+        HashSet<String> ops = new HashSet();
         ops.add("bar");
 
         OptionQuestion oq = new OptionQuestion("", ops);
@@ -27,7 +28,7 @@ class OptionQuestionTest {
 
     @Test
     void setOptions() {
-        Set<String> ops = new HashSet<>();
+        HashSet<String> ops = new HashSet();
         ops.add("bar");
 
         OptionQuestion oq = new OptionQuestion();
@@ -52,7 +53,7 @@ class OptionQuestionTest {
 
         oq.addAnswer(new Answer("mama"));
 
-        String expected = "who's joe? options (biden, mama): [mama]";
-        assertEquals(expected, oq.toString());
+        assertThat(oq.toString(), containsString("[mama]"));
+        assertThat(oq.toString(), containsString("[biden, mama]"));
     }
 }

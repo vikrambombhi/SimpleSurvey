@@ -1,5 +1,7 @@
 package com.example.survey.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -11,9 +13,9 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = OptionQuestion.class, name="option"),
-        @JsonSubTypes.Type(value = RangeQuestion.class, name="range"),
-        @JsonSubTypes.Type(value = TextQuestion.class, name="text")
+        @JsonSubTypes.Type(value = OptionQuestion.class, name = "option"),
+        @JsonSubTypes.Type(value = RangeQuestion.class, name = "range"),
+        @JsonSubTypes.Type(value = TextQuestion.class, name = "text")
 })
 public abstract class Question {
     @Id
@@ -37,26 +39,36 @@ public abstract class Question {
         answers = new HashSet();
     }
 
+    @JsonGetter("answers")
     public Set<Answer> getAnswers() {
         return answers;
+    }
+
+    @JsonSetter("answers")
+    public void setAnswers(Set<Answer> ans) {
+        answers = ans;
     }
 
     public void addAnswer(Answer ans) {
         answers.add(ans);
     }
 
+    @JsonSetter("question")
     public void setQuestion(String q) {
         question = q;
     }
 
+    @JsonGetter("question")
     public String getQuestion() {
         return question;
     }
 
+    @JsonSetter("id")
     public void setId(long id) {
         this.id = id;
     }
 
+    @JsonGetter("id")
     public long getId() {
         return id;
     }

@@ -1,15 +1,17 @@
 package com.example.survey.models;
 
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.ranges.Range;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RangeQuestionTest {
 
     @Test
     void getQuestion() {
-        String expected =  "how much does kirin bench (in lbs)?";
+        String expected = "how much does kirin bench (in lbs)?";
         RangeQuestion rq = new RangeQuestion(expected, 45, 205);
         assertEquals(expected, rq.getQuestion());
     }
@@ -40,6 +42,11 @@ class RangeQuestionTest {
         rq.addAnswer(new Answer(2));
         rq.addAnswer(new Answer(3));
         rq.addAnswer(new Answer(4));
-        assertEquals("vals min 1 max 3: [1, 2, 3]", rq.toString());
+
+        ArrayList<Answer> sortedAnswers = new ArrayList(rq.getAnswers());
+        Collections.sort(sortedAnswers);
+
+        String expected = "[1, 2, 3]";
+        assertEquals(expected, sortedAnswers.toString());
     }
 }

@@ -3,7 +3,7 @@ package com.example.survey.models;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AnswerTest {
 
@@ -40,6 +40,10 @@ class AnswerTest {
         valAnswer.setVal(1);
         Answer valAnswer2 = new Answer(2);
         assertEquals(-1, valAnswer.compareTo(valAnswer2));
+
+        strAnswer.setResponse("hello");
+        Answer strAnswer2 = new Answer("hi");
+        assertEquals(-4, strAnswer.compareTo(strAnswer2));
     }
 
 }

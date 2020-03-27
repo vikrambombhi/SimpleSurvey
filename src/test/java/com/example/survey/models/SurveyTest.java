@@ -3,8 +3,6 @@ package com.example.survey.models;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
