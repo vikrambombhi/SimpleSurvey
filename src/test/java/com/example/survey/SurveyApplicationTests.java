@@ -34,6 +34,8 @@ class SurveyApplicationTests {
     @Autowired
     private SurveyRepo surveyRepo;
     @Autowired
+    private QuestionRepo questionRepo;
+    @Autowired
     private SurveyController sc;
 
     SurveyApplicationTests() {
@@ -73,7 +75,7 @@ class SurveyApplicationTests {
 
         Survey res = this.objectMapper.readValue(r.getResponse().getContentAsString(), Survey.class);
 
-        this.mockMvc.perform(post("/api/survey")
+        this.mockMvc.perform(get("/api/survey")
                 .param("id", String.valueOf(res.getId())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("joe")))
@@ -154,5 +156,24 @@ class SurveyApplicationTests {
         } catch (HystrixRuntimeException e) {
             assertEquals("Hystrix circuit short-circuited and is OPEN", e.getCause().getMessage());
         }
+    }
+
+    @Test
+    void answerQuestion() throws Exception {
+        TextQuestion textQuestion = new TextQuestion("who's joe?");
+        textQuestion.setId(this.questionRepo.save(textQuestion).getId());
+
+        Answer a1 = new Answer("joe mama");
+        textQuestion.addAnswer(a1);
+
+        String body = "[" + this.objectMapper.writeValueAsString(textQuestion) + "]";
+
+        this.mockMvc.perform(post("/api/answers")
+                .contentType("application/json; charset=utf-8")
+                .content(body))
+                .andExpect(status().isOk());
+
+        Question question = this.questionRepo.findById(textQuestion.getId());
+        assertEquals("joe mama", question.getAnswers().toArray()[0].toString());
     }
 }
