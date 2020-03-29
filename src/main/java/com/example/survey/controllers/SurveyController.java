@@ -2,10 +2,13 @@ package com.example.survey.controllers;
 
 import com.example.survey.models.Survey;
 import com.example.survey.models.SurveyRepo;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/api")
@@ -18,9 +21,13 @@ public class SurveyController {
 
     @GetMapping("/surveys")
     @ResponseBody
+    @HystrixCommand(fallbackMethod = "getSurveysFallback")
     public Iterable<Survey> getSurveys() {
-        Iterable<Survey> surveys = this.surveyRepo.findAll();
-        return surveys;
+        return this.surveyRepo.findAll();
+    }
+
+    public Iterable<Survey> getSurveysFallback() {
+        return new ArrayList<Survey>();
     }
 
     @GetMapping("/survey")
@@ -32,6 +39,7 @@ public class SurveyController {
 
     @PostMapping(value = "/new", produces = "application/json; charset=utf-8", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @HystrixCommand(commandKey = "newSurvey")
     public Survey newSurvey(@RequestBody Survey survey) {
         this.surveyRepo.save(survey);
         return survey;

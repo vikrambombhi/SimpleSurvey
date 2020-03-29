@@ -1,7 +1,12 @@
 package com.example.survey;
 
+import com.example.survey.controllers.SurveyController;
 import com.example.survey.models.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.config.ConfigurationManager;
+import com.netflix.hystrix.exception.HystrixRuntimeException;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,6 +19,7 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,8 +36,16 @@ class SurveyApplicationTests {
     private SurveyRepo surveyRepo;
     @Autowired
     private QuestionRepo questionRepo;
+	@Autowired
+    private SurveyController sc;
 
     SurveyApplicationTests() {
+    }
+
+    @BeforeEach
+    public void init() {
+        ConfigurationManager.getConfigInstance().setProperty("hystrix.command.getSurveys.circuitBreaker.forceOpen", "false");
+        ConfigurationManager.getConfigInstance().setProperty("hystrix.command.newSurvey.circuitBreaker.forceOpen", "false");
     }
 
     @Test
@@ -140,5 +154,25 @@ class SurveyApplicationTests {
 
         Question question = this.questionRepo.findById(textQuestion.getId());
         assertEquals("joe mama", question.getAnswers().toArray()[0].toString());
+    }
+
+    @Test
+    void getSurveysCircuitBreaker() {
+        ConfigurationManager.getConfigInstance().setProperty("hystrix.command.getSurveys.circuitBreaker.forceOpen", "true");
+
+        Iterable<Survey> surveys = sc.getSurveys();
+        assertEquals(false, surveys.iterator().hasNext());
+    }
+
+    @Test
+    void newSurveysCircuitBreaker() {
+        ConfigurationManager.getConfigInstance().setProperty("hystrix.command.newSurvey.circuitBreaker.forceOpen", "true");
+
+        try {
+            this.sc.newSurvey(null);
+            fail("should've short circuited");
+        } catch (HystrixRuntimeException e) {
+            assertEquals("Hystrix circuit short-circuited and is OPEN", e.getCause().getMessage());
+        }
     }
 }
