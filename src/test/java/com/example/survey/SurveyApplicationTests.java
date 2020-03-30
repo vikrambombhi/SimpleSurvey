@@ -131,6 +131,7 @@ class SurveyApplicationTests {
     @Test
     void surveysHasID() throws Exception {
         this.mockMvc.perform(get("/api/surveys"))
+            .andExpect(status().isOk())
             .andExpect(jsonPath("$",  not(empty())))
             .andExpect(jsonPath("$[*].id",  notNullValue()))
             .andExpect(jsonPath("$[*].questions",  not(empty())))
