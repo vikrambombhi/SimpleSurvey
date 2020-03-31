@@ -32,6 +32,7 @@ export function SurveyList({ admin = false }) {
       const res = await fetch(`/api/close?id=${id}`, {
         method: "POST"
       });
+      window.location.reload(false);
       res
         .json()
         .then(res => console.log(res)) // TODO chart answer data
