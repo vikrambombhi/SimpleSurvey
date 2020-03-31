@@ -43,9 +43,14 @@ export function SurveyList({ admin = false }) {
   const surveysMarkup =
     surveys && surveys.length > 0
       ? surveys.map((survey, index) => {
-          let actions = admin
-            ? [{ content: "Edit Survey", url: "/app/admin/surveys/edit" }]
-            : [{ content: "Complete Survey", url: "./survey/" + survey.id }];
+          let actions = [];
+          if (!survey.closed) {
+            if (admin) {
+              actions.push({ content: "Edit Survey", url: "/app/admin/surveys/edit" });
+            } else {
+              actions.push({ content: "Complete Survey", url: "./survey/" + survey.id });
+            }
+          }
 
           if (admin && !survey.closed) {
             actions.push({
