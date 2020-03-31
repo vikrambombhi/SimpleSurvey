@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Card, List } from "@shopify/polaris";
+import { Card, List, Badge, TextContainer, Stack } from "@shopify/polaris";
 
 export function SurveyList({ admin = false }) {
   const [surveys, setSurveys] = useState([]);
@@ -19,9 +19,18 @@ export function SurveyList({ admin = false }) {
 
   const questionsListMarkup = questions => {
     return (
-      <List type="bullet">
-        {questions.map(question => {
-          return <List.Item>{question.question}</List.Item>;
+      <List type="number">
+        {questions.map((question, index) => {
+          const responses = question.answers
+            .map(ans => ans.response || ans.val)
+            .join(", ");
+
+          return (
+            <List.Item key={index}>
+              {question.question} <br />
+              {admin ? `Responses: ${responses}` : null}
+            </List.Item>
+          );
         })}
       </List>
     );
@@ -55,10 +64,24 @@ export function SurveyList({ admin = false }) {
 
           return (
             <Card key={index} sectioned title={survey.name} actions={actions}>
-              <p>
-                <b>{survey.closed ? "CLOSED" : "OPEN"}</b>
-              </p>
-              {questionsListMarkup(survey.questions)}
+              <Stack vertical>
+                <Stack>
+                  <TextContainer>
+                    {questionsListMarkup(survey.questions)}
+                  </TextContainer>
+                </Stack>
+                <Stack distribution="trailing">
+                  <p>
+                    <b>
+                      {survey.closed ? (
+                        <Badge status="info">CLOSED</Badge>
+                      ) : (
+                        <Badge status="success">OPEN</Badge>
+                      )}
+                    </b>
+                  </p>
+                </Stack>
+              </Stack>
             </Card>
           );
         })
