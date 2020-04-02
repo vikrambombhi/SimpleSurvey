@@ -16,24 +16,20 @@ export function EditSurvey() {
   // extraOpts is for updating mins/max in range questions or options in option questions
   function handleQuestionChange(index, extraOpts) {
     return newValue => {
-      const updatedQuestions = questions.map((question, idx) => {
-        if (extraOpts && index === idx) {
-          return {
-            ...question,
-            ...(extraOpts === "min" ? { min: newValue } : {}),
-            ...(extraOpts === "max" ? { max: newValue } : {}),
-            ...(extraOpts === "options" ? { options: newValue.split(",") } : {})
-          };
-        }
-        if (index === idx) {
-          return {
-            ...question,
-            question: newValue
-          };
-        }
-
-        return question;
-      });
+      let updatedQuestions = [...questions];
+      if (extraOpts) {
+        updatedQuestions[index] = {
+          ...updatedQuestions[index],
+          ...(extraOpts === "min" ? { min: newValue } : {}),
+          ...(extraOpts === "max" ? { max: newValue } : {}),
+          ...(extraOpts === "options" ? { options: newValue.split(",") } : {})
+        };
+      } else {
+        updatedQuestions[index] = {
+          ...updatedQuestions[index],
+          question: newValue
+        };
+      }
 
       setQuestions(updatedQuestions);
     };
@@ -47,7 +43,6 @@ export function EditSurvey() {
         .then(res => {
           // eslint-disable-next-line
           const surveyToEdit = res.find(sur => sur.id == surveyId);
-          console.log("surveyToEdit: ", surveyToEdit);
           setName(surveyToEdit.name);
           setQuestions(surveyToEdit.questions);
         })
