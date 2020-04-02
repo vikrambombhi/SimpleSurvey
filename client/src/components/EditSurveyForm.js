@@ -37,29 +37,33 @@ export function EditSurveyForm({
       });
     }
 
-    const questionRequests = questions.map(question => {
-      if (question.type === "text") {
-        return questionRequestHelper(question, {
-          type: "text",
-          question: question.question
-        });
-      }
-      if (question.type === "range") {
-        return questionRequestHelper(question, {
-          type: "range",
-          question: question.question,
-          min: question.min,
-          max: question.max
-        });
-      }
-      if (question.type === "option") {
-        return questionRequestHelper(question, {
-          type: "option",
-          question: question.question,
-          options: question.options
-        });
-      }
-    });
+    const questionRequests = questions
+      .map(question => {
+        if (question.type === "text") {
+          return questionRequestHelper(question, {
+            type: "text",
+            question: question.question
+          });
+        }
+        if (question.type === "range") {
+          return questionRequestHelper(question, {
+            type: "range",
+            question: question.question,
+            min: question.min,
+            max: question.max
+          });
+        }
+        if (question.type === "option") {
+          return questionRequestHelper(question, {
+            type: "option",
+            question: question.question,
+            options: question.options
+          });
+        }
+
+        return null;
+      })
+      .filter(question => !!question);
 
     await Promise.all([updateTitleRequest, questionRequests]);
     window.location = "/app/admin/surveys";
@@ -95,7 +99,6 @@ export function EditSurveyForm({
       );
     }
 
-    // TODOD HANDLE CSV input
     if (question.type === "option") {
       return (
         <Card sectioned key={index}>

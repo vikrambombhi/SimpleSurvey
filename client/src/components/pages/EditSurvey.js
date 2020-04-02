@@ -45,6 +45,7 @@ export function EditSurvey() {
       res
         .json()
         .then(res => {
+          // eslint-disable-next-line
           const surveyToEdit = res.find(sur => sur.id == surveyId);
           console.log("surveyToEdit: ", surveyToEdit);
           setName(surveyToEdit.name);
