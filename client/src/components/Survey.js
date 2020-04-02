@@ -68,7 +68,7 @@ export function Survey({ survey = {} }) {
             label={question.question}
             error={fieldErrors[index]}
             onChange={(value, id) => {
-              questions[index].answers = [{ val: value }];
+              questions[index].answers = value ? [{ val: value }] : [];
               setQuestions([...questions]);
             }}
             output
@@ -84,7 +84,7 @@ export function Survey({ survey = {} }) {
               return { label: option, value: option };
             })}
             onChange={(value, id) => {
-              questions[index].answers = [{ response: value }];
+              questions[index].answers = value ? [{ response: value }] : [];
               setQuestions([...questions]);
             }}
           />
@@ -95,7 +95,7 @@ export function Survey({ survey = {} }) {
             value={question.answers[0]?.response || ""}
             error={fieldErrors[index]}
             onChange={(value, id) => {
-              questions[index].answers = [{ response: value }];
+              questions[index].answers = value ? [{ response: value }]: [];
               setQuestions([...questions]);
             }}
             label={question.question}
