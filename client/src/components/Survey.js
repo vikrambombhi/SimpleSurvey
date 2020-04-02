@@ -10,18 +10,32 @@ import {
 
 export function Survey({ survey = {} }) {
   const [questions, setQuestions] = useState([]);
+  const [fieldErrors, setFieldErrors] = useState([]);
 
   useEffect(() => {
     let qs = survey.questions || [];
     setQuestions(
       qs.map(q => {
-        q.answers = [];
+        switch (q.type) {
+          case "range":
+            q.answers = [{val: parseInt(q.min)}];
+            break
+          case "option":
+            q.answers = [{response: q.options[0]}];
+            break
+          default:
+            q.answers = []
+        }
         return q;
       })
     );
   }, [survey]);
 
   async function submitAnswers() {
+    if (hasBlankAnswers()) {
+      showValidationErrors()
+      return
+    }
     const res = await fetch(`/api/answers`, {
       method: "POST",
       headers: {
@@ -34,6 +48,17 @@ export function Survey({ survey = {} }) {
     await res.json().catch(err => console.log(err));
   }
 
+  function hasBlankAnswers() {
+    return questions.some(q =>  q.answers.length > 0 )
+  }
+
+  function showValidationErrors() {
+    setFieldErrors(questions.map((q) =>  {
+      if (q.answers.length) return ""
+      return "This field is required"
+    }))
+  }
+
   const questionMarkup = (question, index) => {
     switch (question.type) {
       case "range":
@@ -41,6 +66,7 @@ export function Survey({ survey = {} }) {
           <RangeSlider
             value={question.answers[0]?.val || parseInt(question.min)}
             label={question.question}
+            error={fieldErrors[index]}
             onChange={(value, id) => {
               questions[index].answers = [{ val: value }];
               setQuestions([...questions]);
@@ -53,6 +79,7 @@ export function Survey({ survey = {} }) {
           <Select
             value={question.answers[0]?.response || ""}
             label={question.question}
+            error={fieldErrors[index]}
             options={question.options.map(option => {
               return { label: option, value: option };
             })}
@@ -66,6 +93,7 @@ export function Survey({ survey = {} }) {
         return (
           <TextField
             value={question.answers[0]?.response || ""}
+            error={fieldErrors[index]}
             onChange={(value, id) => {
               questions[index].answers = [{ response: value }];
               setQuestions([...questions]);
