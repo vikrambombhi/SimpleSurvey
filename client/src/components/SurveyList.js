@@ -46,10 +46,19 @@ export function SurveyList({ admin = false }) {
           let actions = [];
           if (!survey.closed) {
             if (admin) {
-              actions.push({ content: "Edit Survey", url: "/app/admin/surveys/edit" });
-              actions.push({ content: "Close Survey", onAction: closeSurvey(survey.id) });
+              actions.push({
+                content: "Edit Survey",
+                url: `/app/admin/surveys/edit/${survey.id}`
+              });
+              actions.push({
+                content: "Close Survey",
+                onAction: closeSurvey(survey.id)
+              });
             } else {
-              actions.push({ content: "Complete Survey", url: "./survey/" + survey.id });
+              actions.push({
+                content: "Complete Survey",
+                url: "./survey/" + survey.id
+              });
             }
           }
 
