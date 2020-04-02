@@ -54,6 +54,10 @@ export function SurveyList({ admin = false }) {
                 content: "Close Survey",
                 onAction: closeSurvey(survey.id)
               });
+              actions.push({
+                content: "View Results",
+                url: `/app/admin/surveys/review/${survey.id}`
+              });
             } else {
               actions.push({
                 content: "Complete Survey",

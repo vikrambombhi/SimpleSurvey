@@ -8,7 +8,8 @@ import {
   CompleteSurveys,
   NewSurvey,
   FillSurvey,
-  EditSurvey
+  EditSurvey,
+  ReviewSurvey
 } from "./pages";
 
 export function App() {
@@ -21,6 +22,9 @@ export function App() {
           </Route>
           <Route path="/app/admin/surveys/edit/:id">
             <EditSurvey />
+          </Route>
+          <Route path="/app/admin/surveys/review/:id">
+            <ReviewSurvey />
           </Route>
           <Route path="/app/admin/surveys">
             <AdminDashboard />
