@@ -136,7 +136,6 @@ export function EditSurveyForm({
       <Form onSubmit={handleSubmit}>
         <FormLayout>
           <TextField
-            data-testid="name"
             value={surveyTitle}
             onChange={handleSurveyTitleChange}
             label="Survey Title"
