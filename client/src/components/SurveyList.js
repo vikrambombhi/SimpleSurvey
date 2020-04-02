@@ -47,16 +47,13 @@ export function SurveyList({ admin = false }) {
           if (!survey.closed) {
             if (admin) {
               actions.push({ content: "Edit Survey", url: "/app/admin/surveys/edit" });
+              actions.push({
+                            content: "Close Survey",
+                            onAction: closeSurvey(survey.id)
+                          });
             } else {
               actions.push({ content: "Complete Survey", url: "./survey/" + survey.id });
             }
-          }
-
-          if (admin && !survey.closed) {
-            actions.push({
-              content: "Close Survey",
-              onAction: closeSurvey(survey.id)
-            });
           }
 
           return (
