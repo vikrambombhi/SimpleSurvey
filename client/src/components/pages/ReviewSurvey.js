@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { Page, Spinner } from "@shopify/polaris";
-import { BarChart , XAxis, YAxis, Bar } from 'recharts'
+import { Page, Spinner, Stack } from "@shopify/polaris";
+import { BarChart , XAxis, YAxis, Bar, Pie, PieChart, Tooltip } from 'recharts'
 
 export function ReviewSurvey() {
     let { id: surveyId } = useParams();
@@ -22,64 +22,42 @@ export function ReviewSurvey() {
         fetchData();
     }, [surveyId]);
 
-    const answerChart = (type, answers) => {
-        if (type === "range") {
-            return
+    const optionQuestionChart = (answers) => {
+        const optionCount = answers.reduce((accumulator, answer) => {
+            if (accumulator[answer.response] === undefined) {
+                accumulator[answer.response] = 1
+            } else {
+                accumulator[answer.response]++
+            }
+            return accumulator
+        }, {})
+        console.log(optionCount)
 
-        }
-        return answers.map((answer) => {
-            return <p>{answer.val}</p>
+        const data = Object.keys(optionCount).map(optionName => {
+            return {name: optionName, value: optionCount[optionName]}
         })
+        console.log(data)
+
+        return (
+            <PieChart width={800} height={400}>
+                <Pie isAnimationActive={true} data={data} cx={200} cy={200} outerRadius={80} fill="#41ead4" label/>
+                <Tooltip/>
+            </PieChart>
+        )
     }
 
-    const questionsContent = (questions) => {
-        return questions.map((question) => {
-            return (
-                <div>
-                    <h1>{question.question}</h1>
-                    { answerChart(question.type, question.answers)}
-                </div>
-            )
-        })
-    }
-
-    const pageContent = (survey) => {
-        console.log("survey is ", survey)
-        if(Object.keys(survey).length === 0 && survey.constructor === Object) {
-            // eslint-disable-next-line
-            return <Stack distribution="center">
-                <Spinner/>
-            </Stack>
-        } else {
-            return questionsContent(survey.questions)
-        }
-    }
-
-    const rangeQuestionCharts = (questions) => {
-        if (!questions) return
-
-        return questions
-            .filter(q => q.type === "range")
-            .filter(q => q.answers.length > 0)
-            .map(rangeQuestionChart);
-    }
-
-    const rangeQuestionChart = (question) => {
-        const histogram = histogramAnswers(question.answers);
-        console.log(histogram)
+    const rangeQuestionChart = (answers) => {
+        const histogram = histogramAnswers(answers);
         let data = Object.entries(histogram).map(([group, value]) => {
             return { name: group, value: value}
         })
 
         return (
-            <div>
-                <h1>{question.question}</h1>
-                <BarChart width={600} height={300} data={data}>
-                    <XAxis dataKey="name"/>
-                    <YAxis/>
-                    <Bar dataKey="value" fill="#8884d8"/>
-                </BarChart>
-            </div>
+            <BarChart width={600} height={300} data={data}>
+                <XAxis dataKey="name"/>
+                <YAxis/>
+                <Bar dataKey="value" fill="#8884d8"/>
+            </BarChart>
         )
     }
 
@@ -99,12 +77,46 @@ export function ReviewSurvey() {
         }, {})
     }
 
+    const answerChart = (type, answers) => {
+        if (type === "range") {
+            return rangeQuestionChart(answers)
+        }
+        else if (type === "option") {
+            return optionQuestionChart(answers)
+        }
+        return answers.map((answer) => {
+            return <p>{answer.val}</p>
+        })
+    }
+
+    const questionsContent = (questions) => {
+        return questions.map((question) => {
+            return (
+                <div>
+                    <h1>{question.question}</h1>
+                    { answerChart(question.type, question.answers)}
+                </div>
+            )
+        })
+    }
+
+    const pageContent = (survey) => {
+        if(Object.keys(survey).length === 0 && survey.constructor === Object) {
+            // eslint-disable-next-line
+            return <Stack distribution="center">
+                <Spinner/>
+            </Stack>
+        } else {
+            return questionsContent(survey.questions)
+        }
+    }
+
     return (
         <Page
             title="Review Survey"
             breadcrumbs={[{ content: "Admin Dashboard", url: "/app/admin/surveys" }]}
         >
-            {rangeQuestionCharts(survey.questions)}
+            { pageContent(survey) }
         </Page>
     );
 }
