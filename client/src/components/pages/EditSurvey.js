@@ -37,14 +37,13 @@ export function EditSurvey() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`/api/surveys`);
+      const res = await fetch(`/api/survey?id=` + surveyId);
       res
         .json()
         .then(res => {
           // eslint-disable-next-line
-          const surveyToEdit = res.find(sur => sur.id == surveyId);
-          setName(surveyToEdit.name);
-          setQuestions(surveyToEdit.questions);
+          setName(res.name);
+          setQuestions(res.questions);
         })
         .catch(err => setQuestions([]));
     }
