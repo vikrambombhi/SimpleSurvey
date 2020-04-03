@@ -32,10 +32,10 @@ export function SurveyList({ admin = false }) {
     return (
       <List type="bullet">
         {questions.map(question => {
-          console.log(question);
           return (
             <div>
               <List.Item> {question.question} </List.Item>
+              <p>Sample Answers</p>
               {answerListMarkup(question.answers)}
             </div>
           );
