@@ -148,7 +148,7 @@ export function EditSurveyForm({
           {questionsMarkup}
 
           <Button submit primary>
-            Edit
+            Save
           </Button>
         </FormLayout>
       </Form>
