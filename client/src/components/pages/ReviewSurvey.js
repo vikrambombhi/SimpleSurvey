@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { Page, Spinner, Stack } from "@shopify/polaris";
+import { Page, Spinner, Stack, Card, List } from "@shopify/polaris";
 import { BarChart , XAxis, YAxis, Bar, Pie, PieChart, Tooltip } from 'recharts'
 
 export function ReviewSurvey() {
@@ -31,12 +31,10 @@ export function ReviewSurvey() {
             }
             return accumulator
         }, {})
-        console.log(optionCount)
 
         const data = Object.keys(optionCount).map(optionName => {
             return {name: optionName, value: optionCount[optionName]}
         })
-        console.log(data)
 
         return (
             <PieChart width={800} height={400}>
@@ -78,24 +76,30 @@ export function ReviewSurvey() {
     }
 
     const answerChart = (type, answers) => {
+        if (answers.length === 0) {
+            return <p>No answers yet =( </p>
+        }
         if (type === "range") {
             return rangeQuestionChart(answers)
         }
         else if (type === "option") {
             return optionQuestionChart(answers)
         }
-        return answers.map((answer) => {
-            return <p>{answer.val}</p>
-        })
+        return <List>
+            {
+                answers.map((answer) => {
+                    return <List.Item>{answer.val}</List.Item>
+                })
+            }
+        </List>
     }
 
     const questionsContent = (questions) => {
         return questions.map((question) => {
             return (
-                <div>
-                    <h1>{question.question}</h1>
+                <Card title={question.question}>
                     { answerChart(question.type, question.answers)}
-                </div>
+                </Card>
             )
         })
     }
