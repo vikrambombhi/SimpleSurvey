@@ -44,8 +44,8 @@ export function SurveyList({ admin = false }) {
     surveys && surveys.length > 0
       ? surveys.map((survey, index) => {
           let actions = [];
-          if (!survey.closed) {
-            if (admin) {
+          if (admin) {
+            if (!survey.closed) {
               actions.push({
                 content: "Edit Survey",
                 url: `/app/admin/surveys/edit/${survey.id}`
@@ -54,11 +54,13 @@ export function SurveyList({ admin = false }) {
                 content: "Close Survey",
                 onAction: closeSurvey(survey.id)
               });
-              actions.push({
-                content: "View Results",
-                url: `/app/admin/surveys/review/${survey.id}`
-              });
-            } else {
+            }
+            actions.push({
+              content: "View Results",
+              url: `/app/admin/surveys/review/${survey.id}`
+            });
+          } else {
+            if (!survey.closed) {
               actions.push({
                 content: "Complete Survey",
                 url: "./survey/" + survey.id
