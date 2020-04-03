@@ -36,7 +36,8 @@ export function Survey({ survey = {} }) {
       showValidationErrors()
       return
     }
-    const res = await fetch(`/api/answers`, {
+    
+    await fetch(`/api/answers`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -45,11 +46,11 @@ export function Survey({ survey = {} }) {
       body: JSON.stringify(questions)
     });
 
-    await res.json().catch(err => console.log(err));
+    window.location = "/app/surveys";
   }
 
   function hasBlankAnswers() {
-    return questions.some(q =>  q.answers.length > 0 )
+    return questions.some(q =>  q.answers.length === 0 )
   }
 
   function showValidationErrors() {
