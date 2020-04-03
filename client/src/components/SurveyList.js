@@ -17,6 +17,17 @@ export function SurveyList({ admin = false }) {
     fetchData();
   }, []);
 
+  const answerMarkup = answer => {
+    if ("response" in answer) {
+      return <List.Item>{answer.response}</List.Item>;
+    }
+    return <List.Item>{answer.val}</List.Item>;
+  };
+
+  const answerListMarkup = answers => {
+    return <List type="number">{answers.map(answerMarkup).slice(0, 3)}</List>;
+  };
+
   const questionsListMarkup = questions => {
     return (
       <List type="bullet">
@@ -25,7 +36,7 @@ export function SurveyList({ admin = false }) {
           return (
             <div>
               <List.Item> {question.question} </List.Item>
-              <p>{question.answers}</p>
+              {answerListMarkup(question.answers)}
             </div>
           );
         })}
