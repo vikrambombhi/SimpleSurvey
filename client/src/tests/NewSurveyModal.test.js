@@ -3,7 +3,6 @@ import { render, fireEvent } from "@testing-library/react";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider } from "@shopify/polaris";
 import "mutationobserver-shim";
-global.MutationObserver = window.MutationObserver
 
 import { SurveyForm } from "../components";
 
