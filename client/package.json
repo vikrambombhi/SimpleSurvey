@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "mutationobserver-shim": "^0.3.5",
     "shx": "^0.3.2"
   }
 }

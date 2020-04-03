@@ -2,20 +2,14 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider } from "@shopify/polaris";
+import "mutationobserver-shim";
 
 import { SurveyForm } from "../components";
 
 const setup = () => {
-  const questions = [];
-  const setQuestions = qs => {
-    questions = qs;
-  };
-  const getQuestions = () => {
-    [...questions];
-  };
   const utils = render(
     <AppProvider i18n={enTranslations}>
-      <SurveyForm setQuestions={setQuestions} getQuestions={getQuestions} />
+      <SurveyForm />
     </AppProvider>
   );
   const input = utils.getByLabelText("Name");
