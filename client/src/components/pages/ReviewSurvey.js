@@ -88,7 +88,7 @@ export function ReviewSurvey() {
         return <List>
             {
                 answers.map((answer) => {
-                    return <List.Item>{answer.val}</List.Item>
+                    return <List.Item>{answer.response}</List.Item>
                 })
             }
         </List>
