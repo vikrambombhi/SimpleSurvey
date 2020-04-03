@@ -1,12 +1,28 @@
 import React, { useState, useCallback } from "react";
 
-import { Form, FormLayout, TextField, Button, Card } from "@shopify/polaris";
+import { Form, FormLayout, TextField, Button, Card, Popover, ActionList } from "@shopify/polaris";
 import { QuestionList } from "./QuestionList.js";
 
-export function SurveyForm({ setQuestions, getQuestions }) {
+export function SurveyForm() {
   const [name, setName] = useState("");
+  const [questions, setQuestions] = useState([]);
+  const [active, setActive] = useState(true);
   const handleTitleChange = useCallback(value => setName(value), []);
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
   const strToArray = str => str?.replace(/\s/g, "").split(",");
+  const addQuestion = type => {
+    const values = [...questions];
+    values.push({ type });
+    setQuestions(values);
+  };
+  const getQuestions = () => {
+    return [...questions];
+  };
+  const activator = (
+    <Button onClick={toggleActive} disclosure>
+      Add a question
+    </Button>
+  );
 
   const formatQuestions = questions =>
     questions.map(q => {
@@ -63,6 +79,37 @@ export function SurveyForm({ setQuestions, getQuestions }) {
             setQuestions={setQuestions}
             getQuestions={getQuestions}
           />
+
+          <Popover active={active} activator={activator} onClose={toggleActive}>
+            <ActionList
+              items = {[
+                {
+                  content: "Range Question",
+                  accessibilityLabel: "Add a range question",
+                  onAction: () => {
+                    addQuestion("range");
+                    toggleActive();
+                  }
+                },
+                {
+                  content: "Option Question",
+                  accessibilityLabel: "Add an option question",
+                  onAction: () => {
+                    addQuestion("option");
+                    toggleActive();
+                  }
+                },
+                {
+                  content: "Text Question",
+                  accessibilityLabel: "Add a text question",
+                  onAction: () => {
+                    addQuestion("text");
+                    toggleActive();
+                  }
+                }
+              ]}
+            />
+          </Popover>
 
           <Button submit>Submit</Button>
         </FormLayout>
